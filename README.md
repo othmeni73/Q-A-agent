@@ -61,6 +61,9 @@ pnpm install
 # Copy env template and tweak
 cp backend/.env.example backend/.env
 
+# Spin up local Qdrant (REST 6333, gRPC 6334)
+docker compose up -d
+
 # Start the backend in watch mode (pino-pretty logs)
 pnpm dev
 

@@ -40,6 +40,13 @@ export const BenchmarkSchema = z.object({
 });
 export type BenchmarkConfig = z.infer<typeof BenchmarkSchema>;
 
+export const VectorSchema = z.object({
+  url: z.string().url().default('http://localhost:6333'),
+  collection: z.string().min(1),
+  denseSize: z.number().int().positive().default(768),
+});
+export type VectorConfig = z.infer<typeof VectorSchema>;
+
 export const FileSchema = z.object({
   log: z
     .object({
@@ -54,6 +61,7 @@ export const FileSchema = z.object({
     })
     .default({}),
   benchmark: BenchmarkSchema.optional(),
+  vector: VectorSchema.optional(),
 });
 export type FileConfig = z.infer<typeof FileSchema>;
 

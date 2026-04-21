@@ -37,3 +37,12 @@ benchmark:
   refusalString: "I don't have information on that in the current knowledge base."
   # withBackoff retry count on 429/5xx responses.
   maxRetries: 3
+
+
+# ── Vector store (Step 4) ─────────────────────────────────────────
+# Consumed by `VectorModule`. Absent in test runs — the module auto-swaps to
+# the in-memory FakeVectorStore when NODE_ENV=test (no Qdrant required).
+vector:
+  url: http://localhost:6333
+  collection: agentic-systems-papers
+  denseSize: 768
