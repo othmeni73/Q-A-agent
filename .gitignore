@@ -44,3 +44,6 @@ qdrant_data/
 /steps.md
 /CLAUDE.md
 /spec.txt
+choices.md
+step*
+backend/eval/model-selection/results.partial.json

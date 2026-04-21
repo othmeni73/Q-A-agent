@@ -7,3 +7,33 @@ log:
 
 server:
   host: 0.0.0.0  # 0.0.0.0 so Docker/PaaS can reach the listener
+
+# ── Chat-model benchmark (Decision 3) ─────────────────────────────
+# Consumed only by `pnpm benchmark:models`. The main app boot ignores this section.
+benchmark:
+  # Judge runs on local Ollama (no rate limits, no external dep, no cost).
+  judge:
+    model: gemma2:27b
+    baseUrl: http://localhost:11434/v1
+  # Candidate chat-model pool. Each must currently have a live endpoint on OpenRouter
+  # at $0/$0 pricing — verify before adding via:
+  #   curl -s https://openrouter.ai/api/v1/models/<id>/endpoints
+  # Avoid any Google-family and Llama-derived models: judge is Gemma (Google) and
+  # same-family creates self-preference bias; Llama-derived kept banned historically.
+  candidates:
+    - minimax/minimax-m2.5:free
+    - nvidia/nemotron-3-super-120b-a12b:free
+    - openai/gpt-oss-120b:free
+    - z-ai/glm-4.5-air:free
+  # Parallelism budget. `concurrency` = number of candidate slots running in parallel.
+  concurrency: 4
+  # Minimum ms between consecutive calls keyed by model id. Judge is local → 0.
+  # Candidates live on different OpenRouter providers; each gets its own clock.
+  throttles:
+    judgeMs: 0
+    candidateMs: 4000
+  # Canonical refusal string interpolated into the candidate system prompt AND
+  # checked programmatically on OOS/adversarial cases.
+  refusalString: "I don't have information on that in the current knowledge base."
+  # withBackoff retry count on 429/5xx responses.
+  maxRetries: 3

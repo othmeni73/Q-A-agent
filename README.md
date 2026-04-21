@@ -137,7 +137,9 @@ q-a-agent/
 
 ## Technology choices
 
-Every pick is justified by a concrete failure mode it addresses, not by "standard stack".
+Every pick is justified by a concrete failure mode it addresses, not by "standard stack". The chat model was selected via a committed benchmark; the rest are anchored to first-principles constraints (latency per turn, rate-limit headroom, family-distinct judges for bias control, etc.).
+
+### Framework layer
 
 | Layer | Choice | Reasoning |
 |---|---|---|
@@ -146,18 +148,77 @@ Every pick is justified by a concrete failure mode it addresses, not by "standar
 | **AI SDK** | Vercel `ai` | Required. Unifies `streamText`, `generateObject`, `embed`, and tool use across providers; one-line provider swap; structured-output support. |
 | **Schema validation** | Zod | Required. Used for both config validation and LLM structured output. Single library for runtime validation throughout. |
 | **Package manager** | pnpm + workspaces | Required. Faster install, stricter peer-dep resolution than npm; pinned via `packageManager: "pnpm@10.33.0"` so CI and local stay in lockstep. |
-| **LLM gateway** | OpenRouter | One API key, many models. The system uses four model roles (chat, query-rewriter, contextual-prefix, judge) — per-provider SDK juggling across them would be friction. Fallback chains (e.g., Haiku → Gemini Flash on 429) become trivial. |
-| **Chat model** | `anthropic/claude-haiku-4.5` | Strong instruction-following on constrained formats (exact refusal strings, `[N]` citation markers). Lower verbosity-bias than Opus — matters because eval grades on substance, not word count. |
-| **Query-rewriter model** | `google/gemini-2.5-flash` | 1-sentence task that runs on every chat turn. A premium model is wasted spend; latency compounds per-turn. |
-| **Contextual-prefix model** | `anthropic/claude-haiku-4.5` + prompt caching | Anthropic's contextual retrieval technique. Each chunk is prefixed with a 1–2 sentence doc-level summary at ingestion. Prompt caching amortises the full-doc input tokens across chunks — ~10× cheaper than the naive approach. |
-| **Vector DB** | Qdrant (Docker, local) | First-class hybrid: named dense **and** sparse vectors in one collection, one network round-trip per query. Rich metadata filter DSL. First-party TypeScript client. One-command local install via `docker compose up`. |
-| **Embedding model** | Gemini `text-embedding-004` (768-dim) | MTEB-competitive, generous free tier, no GPU needed. 768 dimensions keeps Qdrant HNSW memory reasonable at 30–50 docs without losing quality. |
-| **Reranker** | BGE reranker v2-m3 (HF inference) | Cross-encoder (jointly encodes `(query, chunk)`), captures interaction features bi-encoder embeddings lose. Free tier on Hugging Face. Lifts nDCG by 5–15 points on in-domain sets vs. reranking-via-LLM. |
-| **Judge (pairwise)** | `openai/gpt-4o-mini` | **Deliberately a different model family from the chat model** — kills self-preference bias (models rate their own output-style higher). Pairwise scoring is more stable than absolute 1–5 across runs. |
-| **Judge (pointwise)** | `google/gemini-2.5-flash` | Pointwise is fine for groundedness (objective question: "is every claim in the retrieved context?"). |
 | **Logger** | `nestjs-pino` | Structured JSON in CI/prod, `pino-pretty` in dev only. Dev-only pretty transport avoids Jest worker-thread hangs. Redacts `authorization`, `cookie`, `x-api-key` from request logs by default. |
 | **Test runner** | Jest (Nest CLI default) | Swapping to Vitest was considered and rejected — the benefit (speed) doesn't matter at this scale, and the cost (re-wiring ts-jest, e2e config, `@types/jest`) is real. |
-| **Config format** | YAML + `.env` split | YAML for committed, non-secret, deployment-independent config (log level, server host, retrieval tunables). `.env` for runtime/deploy-specific values and secrets. One loader validates both with Zod, one typed `AppConfig` object injected via DI. |
+| **Config format** | YAML + `.env` split | YAML for committed, non-secret config (log level, server host, retrieval tunables). `.env` for runtime/deploy-specific values + secrets. One Zod-validated loader; one typed `AppConfig` injected via DI. |
+
+### Provider + model stack
+
+Hard constraint: **strict zero-cost, no credit card**. Every model slot is a free-tier pick on a provider that doesn't require billing setup.
+
+| Role | Choice | Runtime | Rationale |
+|---|---|---|---|
+| **LLM gateway** | OpenRouter | cloud | One key, many models. The system uses 4 model roles across 3+ providers — per-provider SDK juggling would be friction. Built-in fallback routing for 429s. |
+| **Chat model** | `nvidia/nemotron-3-super-120b-a12b:free` | OpenRouter (Nvidia provider) | **Picked via benchmark** (see *Chat model benchmark* below). Top-ranked on the weighted rubric: matched best on accuracy + faithfulness, fastest p50 latency of the four candidates. |
+| **Query rewriter** | `google/gemma-3-4b-it:free` | OpenRouter (Google AI Studio provider) | Runs every turn — latency matters far more than quality ceiling here. 4B is the sweet spot: large enough for reliable pronoun resolution (1.2B Liquid is edge-of-reliable on anaphora), small enough for sub-second latency. 32K context handles long conversation histories without truncation. |
+| **Contextual-prefix generator** | `gemini-2.5-flash` + Google native **context caching** | Google AI Studio direct | Ingestion-time. The cost problem: naively, each chunk call resends the full document as context — 200K+ redundant input tokens per doc. Gemini's context caching (Google's equivalent of Anthropic prompt caching) sends the doc once per file, caches it ~60 min, reuses across chunks → ~10× effective throughput on the free tier. No other free-tier option exposes caching this cleanly. |
+| **Embedding model** | `text-embedding-004` (768-dim) | Google AI Studio direct | MTEB-competitive at this corpus scale. Free tier: 1500 RPD, 1M tokens/day, no card. 768 dimensions keep Qdrant HNSW memory reasonable without losing recall quality at 30–50 docs. Same `GOOGLE_GENERATIVE_AI_API_KEY` as the prefix generator — one new provider, not two. |
+| **Vector DB** | Qdrant (Docker, local) | Local | First-class hybrid: named dense **and** sparse vectors in a single collection, one round-trip per query. Rich metadata filter DSL. First-party TypeScript client. `docker compose up` and it's live. |
+| **Reranker** | `Xenova/bge-reranker-v2-m3` (ONNX, quantized) via `@xenova/transformers` | **Local, in-process CPU** | Cross-encoder that jointly encodes `(query, chunk)` pairs — captures interaction features bi-encoders lose. Lifts nDCG by 5–15 points on in-domain sets. Running in-process via transformers.js means no HF Inference rate limits, no `HF_TOKEN`, no network hop during chat. ~400 ms per 20-pair batch on CPU; the 2×P6 GPUs stay reserved for the judge. |
+| **Judge — pairwise (relevance)** | `gemma2:27b` | **Local Ollama, 2×P6 GPU split** | Cross-encoder-style LLM judge. Family deliberately distinct from every candidate (Gemma ≠ Nvidia, MiniMax, OpenAI-open, Z-AI) → no self-preference bias. Local runtime eliminates the 8 RPM shared-pool cap that OpenRouter's Llama judge hit in the first benchmark run. Pairwise scoring with symmetric ordering (A-vs-B + B-vs-A, only count agreements) kills position bias. |
+| **Judge — pointwise (groundedness)** | `gemma2:27b` | Local Ollama, same instance | Same model as pairwise — groundedness is an objective task ("is each claim in the context?") and tolerates same-family judging. Reuses the already-loaded model, zero extra setup cost. |
+
+### Chat model benchmark
+
+Instead of picking the chat model on vibes or published leaderboards, we ran a committed benchmark: **[`backend/eval/model-selection/results.json`](./backend/eval/model-selection/results.json)**. Full methodology:
+
+**Candidates (4 candidates, 4 distinct families, all free on OpenRouter at run time):**
+
+- `nvidia/nemotron-3-super-120b-a12b:free` — Nvidia
+- `openai/gpt-oss-120b:free` — OpenAI open-weight
+- `z-ai/glm-4.5-air:free` — Z-AI (GLM)
+- `minimax/minimax-m2.5:free` — MiniMax
+
+Google-family models (Gemma) excluded because the judge is Gemma-family (bias control). Llama-family models excluded for historical reasons (the original Llama judge was rate-limit-bricked; banning Llama candidates keeps the judge-choice reversible).
+
+**Test cases (25 hand-crafted, 6 category types):** factual (×7), multi-doc synthesis (×5), citation discipline / hallucination trap (×4), out-of-scope refusal (×3), adversarial prompt injection (×3), ambiguous clarification (×3). Each case carries an `expected` contract: which chunks must be cited, exact refusal string (for OOS/adversarial), strings that must not leak, whether clarification should be requested.
+
+**Weighted rubric:**
+
+```
+finalScore = 0.30 × formatCompliance    // programmatic: citation format, exact refusal, no-leak
+           + 0.30 × accuracy             // LLM judge pointwise: "is this correct?" 0–5 → 0–1
+           + 0.20 × faithfulness         // LLM judge pointwise: "no hallucinated facts?" 0–5 → 0–1
+           + 0.10 × pairwiseWinRate      // LLM judge pairwise, symmetric-ordered
+           + 0.10 × latencyScore         // min(p50 across models) / this model's p50
+```
+
+Weights reflect priorities: format compliance is non-negotiable (a model that fabricates `[N]` markers or skips the exact refusal string is structurally broken for this system), accuracy matches it, faithfulness is a separate concern (a model can cite `[1]` correctly and still paraphrase a wrong fact).
+
+**LLM-as-judge bias controls:**
+
+- **Self-preference bias** — judge model family (Gemma) distinct from every candidate
+- **Position bias** — every pairwise comparison run both orderings (A-vs-B and B-vs-A); only count a win when both orderings agree; otherwise tie
+- **Verbosity bias** — pairwise prompt explicitly instructs *"judge substance, not style or length"*
+
+**Results:**
+
+| Rank | Model | finalScore | format | accuracy | faith | pairwise | latency |
+|---|---|---:|---:|---:|---:|---:|---:|
+| **1** | **`nvidia/nemotron-3-super-120b-a12b:free`** | **0.745** | 0.32 | 1.00 | 1.00 | 0.49 | **1.00** |
+| 2 | `openai/gpt-oss-120b:free` | 0.683 | 0.20 | 1.00 | 1.00 | 0.51 | 0.72 |
+| 3 | `z-ai/glm-4.5-air:free` | 0.665 | 0.32 | 0.94 | 1.00 | 0.48 | 0.38 |
+| 4 | `minimax/minimax-m2.5:free` | 0.647 | 0.28 | 1.00 | 1.00 | 0.52 | 0.11 |
+
+Nemotron wins on latency outright (reference `lat=1.00` means fastest p50), ties for best on accuracy and faithfulness, and leads on finalScore by a 0.06 margin over the runner-up. Chosen.
+
+**Meta-finding worth flagging:** all four candidates scored 0.20–0.32 on format compliance (out of 1.0). Accuracy and faithfulness are near-perfect; models *can* answer correctly, they just don't strictly follow our `[N]` citation format and exact refusal strings. **This is a prompt-engineering signal, not a model signal.** No chat-model choice fixes it; the production system prompt (Step 8) must:
+
+- Include multiple few-shot examples of the exact citation format, covering edge cases (multi-cite, refusal, clarification)
+- Use format-enforcing language (*"Respond EXACTLY with …"*)
+- Include explicit negative examples (*"Do not add preambles like 'Based on the context …'"*)
+
+Running the benchmark surfaced a real Step-8 dependency the naive path would have missed. The full benchmark script and its methodology live in [`backend/scripts/benchmark-models.ts`](./backend/scripts/benchmark-models.ts).
 
 ---
 

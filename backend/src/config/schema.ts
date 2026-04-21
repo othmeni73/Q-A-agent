@@ -16,6 +16,30 @@ export type EnvConfig = z.infer<typeof EnvSchema>;
 // ─── From config.yaml (non-secret app config) ─────────────────
 // `.default({})` on nested sections so an empty/partial yaml still
 // resolves — missing sections fall back to their field-level defaults.
+
+/**
+ * Benchmark knobs. Consumed by `scripts/benchmark-models.ts` (Decision 3).
+ * Left `.optional()` at the top level because the main NestJS app boot path
+ * doesn't need this section — only the standalone script reads it.
+ */
+export const BenchmarkSchema = z.object({
+  judge: z.object({
+    model: z.string().min(1),
+    baseUrl: z.string().url().default('http://localhost:11434/v1'),
+  }),
+  candidates: z.array(z.string().min(1)).min(2),
+  concurrency: z.number().int().positive().default(4),
+  throttles: z
+    .object({
+      judgeMs: z.number().int().nonnegative().default(0),
+      candidateMs: z.number().int().nonnegative().default(4000),
+    })
+    .default({}),
+  refusalString: z.string().min(1),
+  maxRetries: z.number().int().nonnegative().default(3),
+});
+export type BenchmarkConfig = z.infer<typeof BenchmarkSchema>;
+
 export const FileSchema = z.object({
   log: z
     .object({
@@ -29,6 +53,7 @@ export const FileSchema = z.object({
       host: z.string().min(1).default('0.0.0.0'),
     })
     .default({}),
+  benchmark: BenchmarkSchema.optional(),
 });
 export type FileConfig = z.infer<typeof FileSchema>;
 
