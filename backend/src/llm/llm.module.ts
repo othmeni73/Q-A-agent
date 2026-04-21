@@ -33,6 +33,18 @@ import {
 
 const TRACE_SINK = Symbol('TRACE_SINK');
 
+/**
+ * Returns true when the mock adapter should be used.
+ * Auto-enabled in the test environment (Jest sets NODE_ENV=test) so e2e tests
+ * boot AppModule without needing any provider key. Explicit opt-in via
+ * LLM_ADAPTER=mock still works outside tests (e.g. local dev without keys).
+ */
+function useMockAdapter(config: AppConfig): boolean {
+  return (
+    config.env.NODE_ENV === 'test' || process.env['LLM_ADAPTER'] === 'mock'
+  );
+}
+
 @Global()
 @Module({
   providers: [
@@ -50,9 +62,9 @@ const TRACE_SINK = Symbol('TRACE_SINK');
     },
     {
       provide: LLM_CLIENT,
-      inject: [TRACE_SINK],
-      useFactory: (sink: TraceSink): LlmClient => {
-        if (process.env['LLM_ADAPTER'] === 'mock') {
+      inject: [APP_CONFIG, TRACE_SINK],
+      useFactory: (config: AppConfig, sink: TraceSink): LlmClient => {
+        if (useMockAdapter(config)) {
           return new TracingLlmClient(new MockLlmClient(), sink);
         }
         const key = process.env['OPENROUTER_API_KEY'];
@@ -66,9 +78,9 @@ const TRACE_SINK = Symbol('TRACE_SINK');
     },
     {
       provide: EMBEDDER,
-      inject: [TRACE_SINK],
-      useFactory: (sink: TraceSink): Embedder => {
-        if (process.env['LLM_ADAPTER'] === 'mock') {
+      inject: [APP_CONFIG, TRACE_SINK],
+      useFactory: (config: AppConfig, sink: TraceSink): Embedder => {
+        if (useMockAdapter(config)) {
           return new TracingEmbedder(new MockEmbedder(), sink);
         }
         const key = process.env['GOOGLE_GENERATIVE_AI_API_KEY'];

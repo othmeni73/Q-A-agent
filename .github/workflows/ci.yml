@@ -37,3 +37,8 @@ jobs:
 
       - name: E2E tests
         run: pnpm test:e2e
+        env:
+          # E2E boots AppModule → LlmModule. Use the mock LLM adapter so CI
+          # doesn't need provider keys (fork PRs can't see secrets anyway).
+          # AppModule also auto-mocks when NODE_ENV=test; this is belt-and-suspenders.
+          LLM_ADAPTER: mock
