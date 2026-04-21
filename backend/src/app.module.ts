@@ -5,6 +5,7 @@ import { APP_CONFIG, type AppConfig } from './config/schema';
 import { buildLoggerConfig } from './config/logger.config';
 import { HealthModule } from './health/health.module';
 import { LlmModule } from './llm/llm.module';
+import { VectorModule } from './vector/vector.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { LlmModule } from './llm/llm.module';
       useFactory: (config: AppConfig) => buildLoggerConfig(config),
     }),
     LlmModule,
+    VectorModule,
     HealthModule,
   ],
   controllers: [],
