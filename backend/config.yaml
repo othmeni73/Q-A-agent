@@ -1,0 +1,9 @@
+# Non-secret, deployment-independent app config.
+# Secrets and per-deployment overrides live in backend/.env (gitignored).
+# Never put API keys, tokens, or passwords here.
+
+log:
+  level: info  # trace | debug | info | warn | error | fatal
+
+server:
+  host: 0.0.0.0  # 0.0.0.0 so Docker/PaaS can reach the listener

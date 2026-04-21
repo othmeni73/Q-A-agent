@@ -1,11 +1,14 @@
-# Nestjs specific
-/dist
-/node_modules
-/build
-/tmp
+# ── Build artifacts (any workspace) ──────────────────────
+node_modules/
+dist/
+build/
+coverage/
+*.tsbuildinfo
+.nest/
+.turbo/
 
-# Logs
-logs
+# ── Logs ─────────────────────────────────────────────────
+logs/
 *.log
 npm-debug.log*
 pnpm-debug.log*
@@ -13,12 +16,31 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
-# dotenv environment variable files
+# ── Env files (commit only the example) ──────────────────
 .env
-.env.development
-.env.test
-.env.production
+.env.*
+!.env.example
 
-# temp directory
-.temp
-.tmp
+# ── Temp dirs ────────────────────────────────────────────
+.temp/
+.tmp/
+tmp/
+
+# ── Editor / OS ──────────────────────────────────────────
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*~
+
+# ── Local infra state ────────────────────────────────────
+qdrant_data/
+
+# ── Repo-specific artifacts (planning docs + LaTeX build) ─
+/nest.*
+/project.*
+/arc.md
+/step.md
+/steps.md
+/CLAUDE.md
+/spec.txt

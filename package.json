@@ -1,0 +1,22 @@
+{
+  "name": "q-a-agent",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Document Q&A agent with RAG, streaming citations, and evaluation — monorepo root",
+  "license": "MIT",
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev":       "pnpm --filter backend dev",
+    "build":     "pnpm -r build",
+    "start":     "pnpm --filter backend start",
+    "lint":      "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck",
+    "test":      "pnpm -r test",
+    "test:e2e":  "pnpm --filter backend test:e2e",
+    "ingest":    "pnpm --filter backend ingest",
+    "evaluate":  "pnpm --filter backend evaluate"
+  }
+}
