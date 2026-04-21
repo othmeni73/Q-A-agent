@@ -4,6 +4,7 @@ import { AppConfigModule } from './config/config.module';
 import { APP_CONFIG, type AppConfig } from './config/schema';
 import { buildLoggerConfig } from './config/logger.config';
 import { HealthModule } from './health/health.module';
+import { LlmModule } from './llm/llm.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { HealthModule } from './health/health.module';
       inject: [APP_CONFIG],
       useFactory: (config: AppConfig) => buildLoggerConfig(config),
     }),
+    LlmModule,
     HealthModule,
   ],
   controllers: [],

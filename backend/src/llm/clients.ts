@@ -1,7 +1,5 @@
 /**
  * LLM client factories — single home for provider client creation.
- * Today: used by the benchmark script + eval helpers.
- * Tomorrow: same factories are wrapped by the `LlmClient` adapter (Step 3).
  */
 
 import { createOpenRouter } from '@openrouter/ai-sdk-provider';

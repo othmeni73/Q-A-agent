@@ -12,7 +12,7 @@ interface HealthBody {
 }
 
 describe('GET /health (e2e)', () => {
-  let app: NestFastifyApplication;
+  let app: NestFastifyApplication | undefined;
 
   beforeAll(async () => {
     const moduleRef: TestingModule = await Test.createTestingModule({
@@ -27,11 +27,13 @@ describe('GET /health (e2e)', () => {
   });
 
   afterAll(async () => {
-    await app.close();
+    // Guarded — if beforeAll threw, `app` is undefined. Let Jest surface
+    // the original boot error instead of masking it with "Cannot read 'close'".
+    if (app) await app.close();
   });
 
   it('returns 200 with status=ok, numeric uptime, and ISO timestamp', async () => {
-    const res = await app.inject({ method: 'GET', url: '/health' });
+    const res = await app!.inject({ method: 'GET', url: '/health' });
 
     expect(res.statusCode).toBe(200);
     const body = res.json<HealthBody>();
@@ -42,7 +44,7 @@ describe('GET /health (e2e)', () => {
   });
 
   it('responds with Content-Type: application/json', async () => {
-    const res = await app.inject({ method: 'GET', url: '/health' });
+    const res = await app!.inject({ method: 'GET', url: '/health' });
     expect(res.headers['content-type']).toMatch(/application\/json/);
   });
 });

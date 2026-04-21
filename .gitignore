@@ -35,6 +35,7 @@ tmp/
 
 # ── Local infra state ────────────────────────────────────
 qdrant_data/
+backend/traces/
 
 # ── Repo-specific artifacts (planning docs + LaTeX build) ─
 /nest.*
