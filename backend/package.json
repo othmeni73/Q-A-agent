@@ -25,12 +25,17 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "ingest": "echo 'ingest command lands in Step 5' && exit 1",
-    "evaluate": "echo 'evaluate command lands in Step 12' && exit 1"
+    "evaluate": "echo 'evaluate command lands in Step 12' && exit 1",
+    "benchmark:models": "tsx scripts/benchmark-models.ts"
   },
   "dependencies": {
+    "@ai-sdk/google": "^3.0.64",
+    "@ai-sdk/openai-compatible": "^2.0.41",
     "@nestjs/common": "^11.0.1",
     "@nestjs/core": "^11.0.1",
     "@nestjs/platform-fastify": "^11.0.0",
+    "@openrouter/ai-sdk-provider": "^2.8.0",
+    "ai": "^6.0.168",
     "dotenv": "^17.4.2",
     "fastify": "^5.0.0",
     "nestjs-pino": "^4.0.0",
@@ -62,6 +67,7 @@
     "ts-loader": "^9.5.2",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
+    "tsx": "^4.21.0",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.20.0"
   },

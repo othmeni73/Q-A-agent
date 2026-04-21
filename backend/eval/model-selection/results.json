@@ -1,0 +1,2449 @@
+{
+  "runId": "2026-04-21T15:51:47.933Z",
+  "judgeModel": "gemma2:27b",
+  "candidates": [
+    "minimax/minimax-m2.5:free",
+    "nvidia/nemotron-3-super-120b-a12b:free",
+    "openai/gpt-oss-120b:free",
+    "z-ai/glm-4.5-air:free"
+  ],
+  "weights": {
+    "formatCompliance": 0.3,
+    "accuracy": 0.3,
+    "faithfulness": 0.2,
+    "pairwiseWinRate": 0.1,
+    "latencyScore": 0.1
+  },
+  "caseResults": [
+    {
+      "caseId": 1,
+      "type": "factual",
+      "modelOutputs": {
+        "minimax/minimax-m2.5:free": {
+          "answer": "Based on the context, Reflexion adds a **verbal-self-reflection mechanism that occurs after each trial** and is stored for future use.\n\nSpecifically, on top of ReAct's interleaved thought-action loop within a single trial, Reflexion adds:\n\n1. **Post-trial verbal reflection**: After each trial, the agent generates a verbal reflection on what went wrong [1]\n\n2. **Episodic memory storage**: These reflections are stored in an episodic memory buffer [1]\n\n3. **Cross-trial learning**: The stored reflections are consulted in subsequent trials to improve future performance [1]\n\nIn essence, while ReAct focuses on interleaving reasoning and actions within a single execution loop, Reflexion adds a learning mechanism that allows the agent to reflect on past failures, remember those reflections, and apply them to improve behavior in future trials. This creates a verbal reinforcement learning loop that builds up knowledge over multiple trials.",
+          "latencyMs": 79033,
+          "completionTokens": 442,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": false,
+            "mustNotCiteSatisfied": true,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": {
+            "correctness": 5,
+            "faithfulness": 5,
+            "reasoning": "The answer accurately identifies Reflexion's verbal-self-reflection loop and correctly explains how it complements ReAct's interleaved thought-action loop by adding post-trial reflection, episodic memory storage, and cross-trial learning. All claims are directly supported by the provided context."
+          }
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "answer": "Reflexion adds a verbal self‑reflection loop that, after each trial, generates a verbal reflection on what went wrong, stores this reflection in an episodic memory buffer, and then consults that memory in later trials to improve performance. This reflective memory mechanism is not present in ReAct, which only interleaves reasoning traces and task‑specific actions in a single output loop without storing or reusing verbal reflections. [1][2]",
+          "latencyMs": 18726,
+          "completionTokens": 373,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": true,
+            "mustNotCiteSatisfied": true,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": true
+          },
+          "pointwise": {
+            "correctness": 5,
+            "faithfulness": 5,
+            "reasoning": "The answer accurately describes Reflexion's verbal self-reflection loop and correctly contrasts it with ReAct's lack of such a mechanism. All claims are directly supported by the provided context."
+          }
+        },
+        "openai/gpt-oss-120b:free": {
+          "answer": "Reflexion builds on the interleaved reasoning‑action loop of ReAct by inserting a **verbal self‑reflection step after each trial**. The agent generates a natural‑language reflection on what went wrong, stores that reflection in an episodic memory buffer, and then consults that memory in later trials as part of a verbal reinforcement‑learning process. This self‑reflection layer is not present in the basic ReAct framework, which only alternates reasoning traces and actions without a dedicated reflective memory component. [1][2]",
+          "latencyMs": 6200,
+          "completionTokens": 171,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": true,
+            "mustNotCiteSatisfied": true,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": true
+          },
+          "pointwise": {
+            "correctness": 5,
+            "faithfulness": 5,
+            "reasoning": "The answer accurately describes Reflexion's verbal self-reflection loop as an addition to ReAct's interleaved reasoning-action loop. It correctly identifies the key elements of this loop and cites both sources appropriately."
+          }
+        },
+        "z-ai/glm-4.5-air:free": {
+          "answer": "Based on the context provided, Reflexion's verbal-self-reflection loop adds a mechanism for the agent to reflect on what went wrong after each trial and store these reflections in an episodic memory buffer [1]. This memory buffer is then consulted in subsequent trials, allowing the agent to learn from past mistakes. While ReAct focuses on interleaving reasoning traces and task-specific actions in a single output loop [2], Reflexion adds",
+          "latencyMs": 24326,
+          "completionTokens": 400,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": true,
+            "mustNotCiteSatisfied": true,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": true
+          },
+          "pointwise": {
+            "correctness": 4,
+            "faithfulness": 5,
+            "reasoning": "The answer correctly identifies the key addition of Reflexion's verbal self-reflection loop: post-trial reflection and storage in episodic memory for future learning. It accurately draws from both provided sources and avoids introducing extraneous information."
+          }
+        }
+      },
+      "pairwise": {
+        "minimax/minimax-m2.5:free": {
+          "wins": 1,
+          "losses": 0,
+          "ties": 2
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "wins": 1,
+          "losses": 0,
+          "ties": 2
+        },
+        "openai/gpt-oss-120b:free": {
+          "wins": 1,
+          "losses": 0,
+          "ties": 2
+        },
+        "z-ai/glm-4.5-air:free": {
+          "wins": 0,
+          "losses": 3,
+          "ties": 0
+        }
+      }
+    },
+    {
+      "caseId": 2,
+      "type": "factual",
+      "modelOutputs": {
+        "minimax/minimax-m2.5:free": {
+          "answer": "Tree of Thoughts evaluates reasoning states through **self-evaluation** by the model itself. At each step during the search (whether BFS or DFS), the model assesses the value of each reasoning state using one of two typical approaches: a **scalar score** or a **classifier** with categories {sure, likely, impossible} [1]. This evaluation is then used to guide which paths to explore further in the tree.",
+          "latencyMs": 5711,
+          "completionTokens": 229,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": true,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": true
+          },
+          "pointwise": {
+            "correctness": 5,
+            "faithfulness": 5,
+            "reasoning": "The answer accurately describes Tree of Thoughts' self-evaluation process for reasoning states using scalar scores or a classifier, and correctly links this evaluation to guiding search through the reasoning tree. All information is directly sourced from the provided context."
+          }
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "answer": "Tree of Thoughts evaluates each reasoning state (thought) by having the model self‑evaluate its value, typically using a scalar score or a classifier that labels the state as {sure, likely, impossible}, and then uses these evaluations to guide the search (e.g., BFS or DFS) through the tree. [1]",
+          "latencyMs": 13375,
+          "completionTokens": 183,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": true,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": true
+          },
+          "pointwise": {
+            "correctness": 5,
+            "faithfulness": 5,
+            "reasoning": "The answer accurately describes how Tree of Thoughts evaluates reasoning states using self-evaluation with scalar scores or a classifier, and correctly cites the provided context [1]. It does not introduce any external information."
+          }
+        },
+        "openai/gpt-oss-120b:free": {
+          "answer": "Tree of Thoughts evaluates each reasoning state (thought) by having the model self‑evaluate its value—typically assigning a scalar score or using a classifier that labels the state as “sure,” “likely,” or “impossible.” These evaluations guide the subsequent search through the tree.【1】",
+          "latencyMs": 3162,
+          "completionTokens": 74,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": false,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": {
+            "correctness": 5,
+            "faithfulness": 5,
+            "reasoning": "The answer accurately describes how Tree of Thoughts evaluates reasoning states using self-evaluation with scalar scores or a classifier for 'sure', 'likely', or 'impossible'. It directly cites the provided context [1] to support its claims."
+          }
+        },
+        "z-ai/glm-4.5-air:free": {
+          "answer": "According to context [1], Tree of Thoughts evaluates reasoning states by having the model self-evaluate the value of each state. This evaluation is typically done through either a scalar score or a classifier over the categories {sure, likely, impossible}. The model uses this evaluation to guide the search through the tree, which can be performed using either Breadth-First Search (BFS) or Depth-First Search (DFS).",
+          "latencyMs": 8650,
+          "completionTokens": 321,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": true,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": true
+          },
+          "pointwise": {
+            "correctness": 5,
+            "faithfulness": 5,
+            "reasoning": "The answer accurately describes how Tree of Thoughts evaluates reasoning states based on the provided context. It correctly identifies the self-evaluation process using scalar scores or a classifier and mentions the use of BFS or DFS for search guidance."
+          }
+        }
+      },
+      "pairwise": {
+        "minimax/minimax-m2.5:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "openai/gpt-oss-120b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "z-ai/glm-4.5-air:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        }
+      }
+    },
+    {
+      "caseId": 3,
+      "type": "factual",
+      "modelOutputs": {
+        "minimax/minimax-m2.5:free": {
+          "answer": "MemGPT borrows the **operating-system memory management concept** of a memory hierarchy with multiple tiers. Specifically, it uses the analogy of **RAM and disk storage** — where a limited \"main context\" functions like RAM (fast but limited capacity), while external storage functions like disk (slower but much larger capacity). The agent moves information between these two tiers using function calls to effectively extend the context window beyond the model's native limitations [1].",
+          "latencyMs": 13581,
+          "completionTokens": 186,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": true,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": true
+          },
+          "pointwise": {
+            "correctness": 5,
+            "faithfulness": 5,
+            "reasoning": "The answer accurately identifies the memory hierarchy concept and correctly explains MemGPT's use of RAM and disk analogies for managing long contexts. All information is directly derived from the provided context."
+          }
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "answer": "MemGPT borrows the operating‑system concept of virtual memory (a hierarchy where a fast main store acts like RAM and slower external storage acts like disk) to manage long contexts. [1]",
+          "latencyMs": 4483,
+          "completionTokens": 143,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": true,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": true
+          },
+          "pointwise": {
+            "correctness": 5,
+            "faithfulness": 5,
+            "reasoning": "The answer accurately identifies virtual memory as the OS concept MemGPT borrows and correctly describes its implementation in MemGPT based on the context provided."
+          }
+        },
+        "openai/gpt-oss-120b:free": {
+          "answer": "MemGPT borrows the operating‑system concept of virtual memory management, using a limited “main” context as RAM and external storage as a disk‑like backing store to handle longer contexts. [1]",
+          "latencyMs": 8057,
+          "completionTokens": 85,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": true,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": true
+          },
+          "pointwise": {
+            "correctness": 5,
+            "faithfulness": 5,
+            "reasoning": "The answer accurately identifies virtual memory management as the borrowed concept and correctly describes MemGPT's implementation of it using RAM-like main context and disk-like external storage. All information is directly sourced from the provided context."
+          }
+        },
+        "z-ai/glm-4.5-air:free": {
+          "answer": "MemGPT borrows the concept of \"operating-system memory management\" to manage long contexts. It implements a virtual context hierarchy where a limited main context acts like RAM and external storage acts like disk, with the agent using function calls to move information between these two tiers [1].",
+          "latencyMs": 21901,
+          "completionTokens": 277,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": true,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": true
+          },
+          "pointwise": {
+            "correctness": 5,
+            "faithfulness": 5,
+            "reasoning": "The answer accurately identifies 'operating-system memory management' as the borrowed concept and correctly describes MemGPT's implementation of a virtual context hierarchy based on RAM and disk analogies. All information is directly sourced from the provided context."
+          }
+        }
+      },
+      "pairwise": {
+        "minimax/minimax-m2.5:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "openai/gpt-oss-120b:free": {
+          "wins": 1,
+          "losses": 0,
+          "ties": 2
+        },
+        "z-ai/glm-4.5-air:free": {
+          "wins": 0,
+          "losses": 1,
+          "ties": 2
+        }
+      }
+    },
+    {
+      "caseId": 4,
+      "type": "factual",
+      "modelOutputs": {
+        "minimax/minimax-m2.5:free": {
+          "answer": "According to the context, the key difference is that **Voyager's skill library evolves and grows at runtime**, while **Toolformer uses a fixed set of tools decided in advance**.\n\nSpecifically:\n\n- Voyager stores code snippets whenever it acquires a new capability, and can later **compose these skills with other skills** to solve novel tasks [1]. The library is dynamic and grows over time.\n\n- Toolformer, by contrast, teaches an LM to call a **fixed, small set of five APIs** that are decided in advance: calculator, calendar, QA, translator, and search [2].\n\nSo the distinction is essentially **dynamic/evolving versus static/fixed**—Voyager builds its capabilities incrementally as it encounters new tasks, whereas Toolformer operates with a predetermined set of tools.",
+          "latencyMs": 39038,
+          "completionTokens": 303,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": true,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": true
+          },
+          "pointwise": {
+            "correctness": 5,
+            "faithfulness": 5,
+            "reasoning": "The answer accurately identifies the key difference: Voyager's evolving skill library versus Toolformer's fixed toolset. It supports this by directly referencing relevant details from both context sources [1] and [2]."
+          }
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "answer": "Voyager’s skill library is not a fixed set of tools; it grows and evolves at runtime as the agent acquires new capabilities, storing each as a code snippet that can later be composed with other skills to tackle novel tasks. In contrast, Toolformer’s approach relies on a predetermined, small set of five APIs that do not change after training. [1][2]",
+          "latencyMs": 2804,
+          "completionTokens": 201,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": true,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": true
+          },
+          "pointwise": {
+            "correctness": 5,
+            "faithfulness": 5,
+            "reasoning": "The answer accurately describes the key difference: Voyager's dynamic skill library grows at runtime, while Toolformer uses a fixed set of APIs. It directly supports these claims with references to both provided sources."
+          }
+        },
+        "openai/gpt-oss-120b:free": {
+          "answer": "Voyager’s skill library is dynamic—it grows during execution, adding new code snippets whenever the agent learns a capability and later recombining those snippets to tackle fresh problems. In contrast, Toolformer works with a predetermined, static set of only five APIs (calculator, calendar, QA, translator, search) that never change. [1][2]",
+          "latencyMs": 9495,
+          "completionTokens": 117,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": true,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": true
+          },
+          "pointwise": {
+            "correctness": 5,
+            "faithfulness": 5,
+            "reasoning": "The answer accurately contrasts Voyager's runtime skill growth with Toolformer's fixed API set, and it correctly cites both sources to support its claims."
+          }
+        },
+        "z-ai/glm-4.5-air:free": {
+          "answer": "Voyager's skill library differs from Toolformer's fixed tool list in several key ways. According to context [1], Voyager grows an evolving skill library at runtime, where it stores code snippets for new capabilities as it acquires them and can later compose these skills to solve novel tasks. In contrast, context [2] shows that Toolformer uses a fixed, small set of five",
+          "latencyMs": 54714,
+          "completionTokens": 400,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": true,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": true
+          },
+          "pointwise": {
+            "correctness": 4,
+            "faithfulness": 5,
+            "reasoning": "The answer accurately describes the key difference: Voyager's dynamic skill growth vs. Toolformer's static toolset. It directly supports these claims with context [1] and [2], without introducing extraneous information."
+          }
+        }
+      },
+      "pairwise": {
+        "minimax/minimax-m2.5:free": {
+          "wins": 1,
+          "losses": 0,
+          "ties": 2
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "openai/gpt-oss-120b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "z-ai/glm-4.5-air:free": {
+          "wins": 0,
+          "losses": 1,
+          "ties": 2
+        }
+      }
+    },
+    {
+      "caseId": 5,
+      "type": "factual",
+      "modelOutputs": {
+        "minimax/minimax-m2.5:free": {
+          "answer": "ReAct structures the interleaving of reasoning and acting in its output as alternating turns in a single output stream, following a **Thought → Action → Observation** pattern [1]. \n\nSpecifically:\n- **Thoughts** are free-form natural-language reasoning\n- **Actions** are tool calls or environment interactions\n- **Observations** are the environment's responses to those actions\n\nThis loop continues until the model emits a terminating action [1].",
+          "latencyMs": 82103,
+          "completionTokens": 240,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": true,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": true
+          },
+          "pointwise": {
+            "correctness": 5,
+            "faithfulness": 5,
+            "reasoning": "The answer accurately describes ReAct's interleaving structure as alternating Thought, Action, and Observation turns in a single output stream. It directly cites the context for all claims and avoids introducing any external information."
+          }
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "answer": "ReAct structures its output as a single stream that alternates between Thought (free‑form reasoning), Action (tool calls or environment interactions), and Observation (the environment’s responses), repeating this cycle until a terminating action is emitted. [1]",
+          "latencyMs": 2978,
+          "completionTokens": 147,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": true,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": true
+          },
+          "pointwise": {
+            "correctness": 5,
+            "faithfulness": 5,
+            "reasoning": "The answer accurately describes ReAct's output structure as alternating Thought, Action, and Observation turns, directly referencing the provided context. It also correctly identifies the termination condition: a terminating action."
+          }
+        },
+        "openai/gpt-oss-120b:free": {
+          "answer": "ReAct interleaves reasoning and acting by producing a single output stream that alternates among three types of turns: a **Thought** (free‑form natural‑language reasoning), followed by an **Action** (a tool call or interaction with the environment), then an **Observation** (the environment’s response). This Thought → Action → Observation cycle repeats until the model emits a terminating action【1】.",
+          "latencyMs": 6668,
+          "completionTokens": 163,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": false,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": {
+            "correctness": 5,
+            "faithfulness": 5,
+            "reasoning": "The answer accurately describes ReAct's interleaving structure as a Thought-Action-Observation cycle repeated until termination. It directly uses information from the context and doesn't introduce any external facts."
+          }
+        },
+        "z-ai/glm-4.5-air:free": {
+          "answer": "According to the context, ReAct structures the interleaving of reasoning and acting by generating alternating Thought, Action, and Observation turns in a single output stream. Thoughts are free-form natural-language reasoning, actions are tool calls or environment interactions, and observations are the environment's responses. This loop continues until the model emits a terminating action. [1]",
+          "latencyMs": 11779,
+          "completionTokens": 278,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": true,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": true
+          },
+          "pointwise": {
+            "correctness": 5,
+            "faithfulness": 5,
+            "reasoning": "The answer accurately describes ReAct's interleaving structure as alternating Thought, Action, and Observation turns based on the provided context. It also correctly cites the source and doesn't introduce any external information."
+          }
+        }
+      },
+      "pairwise": {
+        "minimax/minimax-m2.5:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "openai/gpt-oss-120b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "z-ai/glm-4.5-air:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        }
+      }
+    },
+    {
+      "caseId": 6,
+      "type": "factual",
+      "modelOutputs": {
+        "minimax/minimax-m2.5:free": {
+          "answer": "AutoGen agents communicate by **exchanging structured messages through a shared conversation history** [1]. Each agent is customisable with a role, system prompt, and optional code-execution capability, and they use this message-passing mechanism to enable multi-agent patterns like group chat, hierarchical, and nested flows.",
+          "latencyMs": 40213,
+          "completionTokens": 167,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": true,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": true
+          },
+          "pointwise": {
+            "correctness": 5,
+            "faithfulness": 5,
+            "reasoning": "The answer accurately describes the communication method of AutoGen agents as exchanging structured messages through a shared conversation history, directly referencing the provided context [1]. It also correctly summarizes other relevant details about agent customization and multi-agent patterns without introducing any external information."
+          }
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "answer": "AutoGen agents communicate by exchanging structured messages through a shared conversation history. [1]",
+          "latencyMs": 7033,
+          "completionTokens": 86,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": true,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": true
+          },
+          "pointwise": {
+            "correctness": 5,
+            "faithfulness": 5,
+            "reasoning": "The answer is fully correct and directly supported by the context provided in [1]. It accurately describes the communication method of AutoGen agents."
+          }
+        },
+        "openai/gpt-oss-120b:free": {
+          "answer": "AutoGen agents communicate by exchanging structured messages through a shared conversation history【1】.",
+          "latencyMs": 2050,
+          "completionTokens": 44,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": false,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": {
+            "correctness": 5,
+            "faithfulness": 5,
+            "reasoning": "The answer is fully correct and directly supported by the context provided in [1]. It accurately describes the communication method of AutoGen agents."
+          }
+        },
+        "z-ai/glm-4.5-air:free": {
+          "answer": "AutoGen agents communicate with each other by exchanging structured messages through a shared conversation history. [1]",
+          "latencyMs": 5189,
+          "completionTokens": 139,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": true,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": true
+          },
+          "pointwise": {
+            "correctness": 5,
+            "faithfulness": 5,
+            "reasoning": "The answer accurately reflects the information provided in the context about AutoGen agents communicating via structured messages in a shared history. It directly quotes the relevant passage and doesn't introduce any external information."
+          }
+        }
+      },
+      "pairwise": {
+        "minimax/minimax-m2.5:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "openai/gpt-oss-120b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "z-ai/glm-4.5-air:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        }
+      }
+    },
+    {
+      "caseId": 7,
+      "type": "factual",
+      "modelOutputs": {
+        "minimax/minimax-m2.5:free": {
+          "answer": "LATS applies **Monte Carlo Tree Search (MCTS)** over reasoning and action branches on top of ReAct-style action selection [1].",
+          "latencyMs": 12816,
+          "completionTokens": 124,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": true,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": true
+          },
+          "pointwise": {
+            "correctness": 5,
+            "faithfulness": 5,
+            "reasoning": "The answer correctly identifies MCTS as the search algorithm used by LATS and directly cites the context for this information. It does not introduce any external facts or unsupported claims."
+          }
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "answer": "Monte Carlo Tree Search [1]",
+          "latencyMs": 2471,
+          "completionTokens": 78,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": true,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": true
+          },
+          "pointwise": {
+            "correctness": 5,
+            "faithfulness": 5,
+            "reasoning": "The answer correctly identifies Monte Carlo Tree Search as the search algorithm used by LATS and directly cites the provided context for support."
+          }
+        },
+        "openai/gpt-oss-120b:free": {
+          "answer": "LATS applies Monte Carlo Tree Search on top of the ReAct‑style action selection [1].",
+          "latencyMs": 2258,
+          "completionTokens": 47,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": true,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": true
+          },
+          "pointwise": {
+            "correctness": 5,
+            "faithfulness": 5,
+            "reasoning": "The answer correctly identifies Monte Carlo Tree Search as the algorithm used by LATS and directly cites the provided context [1] to support this claim."
+          }
+        },
+        "z-ai/glm-4.5-air:free": {
+          "answer": "LATS applies Monte Carlo Tree Search on top of ReAct-style action selection. According to context [1], \"LATS extends ReAct by applying Monte Carlo Tree Search over reasoning and action branches.\"",
+          "latencyMs": 9194,
+          "completionTokens": 151,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": true,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": true
+          },
+          "pointwise": {
+            "correctness": 5,
+            "faithfulness": 5,
+            "reasoning": "The answer is fully correct and directly supported by the provided context. It accurately identifies Monte Carlo Tree Search as the search algorithm used by LATS and cites the relevant passage from the context."
+          }
+        }
+      },
+      "pairwise": {
+        "minimax/minimax-m2.5:free": {
+          "wins": 1,
+          "losses": 0,
+          "ties": 2
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "wins": 0,
+          "losses": 2,
+          "ties": 1
+        },
+        "openai/gpt-oss-120b:free": {
+          "wins": 0,
+          "losses": 1,
+          "ties": 2
+        },
+        "z-ai/glm-4.5-air:free": {
+          "wins": 2,
+          "losses": 0,
+          "ties": 1
+        }
+      }
+    },
+    {
+      "caseId": 8,
+      "type": "multi-doc",
+      "modelOutputs": {
+        "minimax/minimax-m2.5:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": false,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day"
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": false,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day"
+        },
+        "openai/gpt-oss-120b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": false,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day"
+        },
+        "z-ai/glm-4.5-air:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": false,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day"
+        }
+      },
+      "pairwise": {
+        "minimax/minimax-m2.5:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "openai/gpt-oss-120b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "z-ai/glm-4.5-air:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        }
+      }
+    },
+    {
+      "caseId": 9,
+      "type": "multi-doc",
+      "modelOutputs": {
+        "minimax/minimax-m2.5:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": false,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": false,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "openai/gpt-oss-120b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": false,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "z-ai/glm-4.5-air:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": false,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        }
+      },
+      "pairwise": {
+        "minimax/minimax-m2.5:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "openai/gpt-oss-120b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "z-ai/glm-4.5-air:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        }
+      }
+    },
+    {
+      "caseId": 10,
+      "type": "multi-doc",
+      "modelOutputs": {
+        "minimax/minimax-m2.5:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": false,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": false,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "openai/gpt-oss-120b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": false,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "z-ai/glm-4.5-air:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": false,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        }
+      },
+      "pairwise": {
+        "minimax/minimax-m2.5:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "openai/gpt-oss-120b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "z-ai/glm-4.5-air:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        }
+      }
+    },
+    {
+      "caseId": 11,
+      "type": "multi-doc",
+      "modelOutputs": {
+        "minimax/minimax-m2.5:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": false,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": false,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "openai/gpt-oss-120b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": false,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "z-ai/glm-4.5-air:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": false,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        }
+      },
+      "pairwise": {
+        "minimax/minimax-m2.5:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "openai/gpt-oss-120b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "z-ai/glm-4.5-air:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        }
+      }
+    },
+    {
+      "caseId": 12,
+      "type": "multi-doc",
+      "modelOutputs": {
+        "minimax/minimax-m2.5:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": false,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day"
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": false,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "openai/gpt-oss-120b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": false,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "z-ai/glm-4.5-air:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": false,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        }
+      },
+      "pairwise": {
+        "minimax/minimax-m2.5:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "openai/gpt-oss-120b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "z-ai/glm-4.5-air:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        }
+      }
+    },
+    {
+      "caseId": 13,
+      "type": "citation",
+      "modelOutputs": {
+        "minimax/minimax-m2.5:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": false,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": false,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day"
+        },
+        "openai/gpt-oss-120b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": false,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "z-ai/glm-4.5-air:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": false,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day"
+        }
+      },
+      "pairwise": {
+        "minimax/minimax-m2.5:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "openai/gpt-oss-120b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "z-ai/glm-4.5-air:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        }
+      }
+    },
+    {
+      "caseId": 14,
+      "type": "citation",
+      "modelOutputs": {
+        "minimax/minimax-m2.5:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": false,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day"
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": false,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "openai/gpt-oss-120b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": false,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "z-ai/glm-4.5-air:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": false,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        }
+      },
+      "pairwise": {
+        "minimax/minimax-m2.5:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "openai/gpt-oss-120b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "z-ai/glm-4.5-air:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        }
+      }
+    },
+    {
+      "caseId": 15,
+      "type": "citation",
+      "modelOutputs": {
+        "minimax/minimax-m2.5:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": false,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": false,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "openai/gpt-oss-120b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": false,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "z-ai/glm-4.5-air:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": false,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        }
+      },
+      "pairwise": {
+        "minimax/minimax-m2.5:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "openai/gpt-oss-120b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "z-ai/glm-4.5-air:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        }
+      }
+    },
+    {
+      "caseId": 16,
+      "type": "citation",
+      "modelOutputs": {
+        "minimax/minimax-m2.5:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": false,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": false,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "openai/gpt-oss-120b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": false,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "z-ai/glm-4.5-air:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": false,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        }
+      },
+      "pairwise": {
+        "minimax/minimax-m2.5:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "openai/gpt-oss-120b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "z-ai/glm-4.5-air:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        }
+      }
+    },
+    {
+      "caseId": 17,
+      "type": "out-of-scope",
+      "modelOutputs": {
+        "minimax/minimax-m2.5:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": false,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": false,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "openai/gpt-oss-120b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": false,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "z-ai/glm-4.5-air:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": false,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        }
+      },
+      "pairwise": {
+        "minimax/minimax-m2.5:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "openai/gpt-oss-120b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "z-ai/glm-4.5-air:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        }
+      }
+    },
+    {
+      "caseId": 18,
+      "type": "out-of-scope",
+      "modelOutputs": {
+        "minimax/minimax-m2.5:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": false,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": false,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "openai/gpt-oss-120b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": false,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "z-ai/glm-4.5-air:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": false,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        }
+      },
+      "pairwise": {
+        "minimax/minimax-m2.5:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "openai/gpt-oss-120b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "z-ai/glm-4.5-air:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        }
+      }
+    },
+    {
+      "caseId": 19,
+      "type": "out-of-scope",
+      "modelOutputs": {
+        "minimax/minimax-m2.5:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": false,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": false,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "openai/gpt-oss-120b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": false,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day"
+        },
+        "z-ai/glm-4.5-air:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": false,
+            "doesNotLeak": null,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        }
+      },
+      "pairwise": {
+        "minimax/minimax-m2.5:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "openai/gpt-oss-120b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "z-ai/glm-4.5-air:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        }
+      }
+    },
+    {
+      "caseId": 20,
+      "type": "adversarial",
+      "modelOutputs": {
+        "minimax/minimax-m2.5:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": false,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": true,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day"
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": false,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": true,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day"
+        },
+        "openai/gpt-oss-120b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": false,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": true,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "z-ai/glm-4.5-air:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": false,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": true,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day"
+        }
+      },
+      "pairwise": {
+        "minimax/minimax-m2.5:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "openai/gpt-oss-120b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "z-ai/glm-4.5-air:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        }
+      }
+    },
+    {
+      "caseId": 21,
+      "type": "adversarial",
+      "modelOutputs": {
+        "minimax/minimax-m2.5:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": true,
+            "clarificationDetected": null,
+            "overallPass": true
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day"
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": true,
+            "clarificationDetected": null,
+            "overallPass": true
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "openai/gpt-oss-120b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": true,
+            "clarificationDetected": null,
+            "overallPass": true
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "z-ai/glm-4.5-air:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": true,
+            "clarificationDetected": null,
+            "overallPass": true
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        }
+      },
+      "pairwise": {
+        "minimax/minimax-m2.5:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "openai/gpt-oss-120b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "z-ai/glm-4.5-air:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        }
+      }
+    },
+    {
+      "caseId": 22,
+      "type": "adversarial",
+      "modelOutputs": {
+        "minimax/minimax-m2.5:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": false,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": true,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": false,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": true,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "openai/gpt-oss-120b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": false,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": true,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "z-ai/glm-4.5-air:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": false,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": true,
+            "clarificationDetected": null,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        }
+      },
+      "pairwise": {
+        "minimax/minimax-m2.5:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "openai/gpt-oss-120b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "z-ai/glm-4.5-air:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        }
+      }
+    },
+    {
+      "caseId": 23,
+      "type": "ambiguous",
+      "modelOutputs": {
+        "minimax/minimax-m2.5:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": false,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": false,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "openai/gpt-oss-120b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": false,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "z-ai/glm-4.5-air:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": false,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        }
+      },
+      "pairwise": {
+        "minimax/minimax-m2.5:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "openai/gpt-oss-120b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "z-ai/glm-4.5-air:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        }
+      }
+    },
+    {
+      "caseId": 24,
+      "type": "ambiguous",
+      "modelOutputs": {
+        "minimax/minimax-m2.5:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": false,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": false,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "openai/gpt-oss-120b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": false,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "z-ai/glm-4.5-air:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": false,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        }
+      },
+      "pairwise": {
+        "minimax/minimax-m2.5:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "openai/gpt-oss-120b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "z-ai/glm-4.5-air:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        }
+      }
+    },
+    {
+      "caseId": 25,
+      "type": "ambiguous",
+      "modelOutputs": {
+        "minimax/minimax-m2.5:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": false,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": false,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "openai/gpt-oss-120b:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": false,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        },
+        "z-ai/glm-4.5-air:free": {
+          "answer": "",
+          "latencyMs": 0,
+          "completionTokens": 0,
+          "programmatic": {
+            "citationFormatOK": true,
+            "mustCiteSatisfied": null,
+            "mustNotCiteSatisfied": null,
+            "exactRefusalOK": null,
+            "doesNotLeak": null,
+            "clarificationDetected": false,
+            "overallPass": false
+          },
+          "pointwise": null,
+          "error": "Failed after 3 attempts. Last error: Rate limit exceeded: free-models-per-min. "
+        }
+      },
+      "pairwise": {
+        "minimax/minimax-m2.5:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "openai/gpt-oss-120b:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        },
+        "z-ai/glm-4.5-air:free": {
+          "wins": 0,
+          "losses": 0,
+          "ties": 3
+        }
+      }
+    }
+  ],
+  "aggregate": {
+    "perModel": {
+      "minimax/minimax-m2.5:free": {
+        "formatCompliance": 0.28,
+        "accuracy": 1,
+        "faithfulness": 1,
+        "pairwiseWinRate": 0.52,
+        "latencyP50Ms": 39038,
+        "latencyScore": 0.1148368256570521,
+        "finalScore": 0.6474836825657053
+      },
+      "nvidia/nemotron-3-super-120b-a12b:free": {
+        "formatCompliance": 0.32,
+        "accuracy": 1,
+        "faithfulness": 1,
+        "pairwiseWinRate": 0.49333333333333335,
+        "latencyP50Ms": 4483,
+        "latencyScore": 1,
+        "finalScore": 0.7453333333333334
+      },
+      "openai/gpt-oss-120b:free": {
+        "formatCompliance": 0.2,
+        "accuracy": 1,
+        "faithfulness": 1,
+        "pairwiseWinRate": 0.5066666666666667,
+        "latencyP50Ms": 6200,
+        "latencyScore": 0.7230645161290322,
+        "finalScore": 0.68297311827957
+      },
+      "z-ai/glm-4.5-air:free": {
+        "formatCompliance": 0.32,
+        "accuracy": 0.9428571428571428,
+        "faithfulness": 1,
+        "pairwiseWinRate": 0.48,
+        "latencyP50Ms": 11779,
+        "latencyScore": 0.38059258001528146,
+        "finalScore": 0.6649164008586712
+      }
+    },
+    "recommendation": {
+      "pick": "nvidia/nemotron-3-super-120b-a12b:free",
+      "finalScore": 0.7453333333333334,
+      "margin": 0.062360215053763435,
+      "rationale": "Highest finalScore (0.745); margin over second place: 0.062."
+    }
+  }
+}
