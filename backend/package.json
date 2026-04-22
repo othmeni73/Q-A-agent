@@ -24,7 +24,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "ingest": "echo 'ingest command lands in Step 5' && exit 1",
+    "ingest": "tsx scripts/ingest.ts",
     "evaluate": "echo 'evaluate command lands in Step 12' && exit 1",
     "benchmark:models": "tsx scripts/benchmark-models.ts"
   },

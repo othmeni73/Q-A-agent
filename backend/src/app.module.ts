@@ -4,6 +4,7 @@ import { AppConfigModule } from './config/config.module';
 import { APP_CONFIG, type AppConfig } from './config/schema';
 import { buildLoggerConfig } from './config/logger.config';
 import { HealthModule } from './health/health.module';
+import { IngestionModule } from './ingestion/ingestion.module';
 import { LlmModule } from './llm/llm.module';
 import { PersistenceModule } from './persistence/persistence.module';
 import { VectorModule } from './vector/vector.module';
@@ -18,6 +19,7 @@ import { VectorModule } from './vector/vector.module';
     LlmModule,
     PersistenceModule,
     VectorModule,
+    IngestionModule,
     HealthModule,
   ],
   controllers: [],

@@ -57,6 +57,21 @@ export const PersistenceSchema = z.object({
 });
 export type PersistenceConfig = z.infer<typeof PersistenceSchema>;
 
+/**
+ * Ingestion pipeline config (Step 6). Optional at top level — defaults kick in
+ * when the yaml section is missing.
+ */
+export const IngestionSchema = z.object({
+  docsDir: z.string().min(1).default('./docs'),
+  chunkTargetChars: z.number().int().positive().default(2000),
+  chunkOverlapChars: z.number().int().nonnegative().default(200),
+  prefixModel: z.string().min(1).default('gemma2:27b'),
+  prefixBaseUrl: z.string().url().default('http://localhost:11434/v1'),
+  embedModel: z.string().min(1).default('text-embedding-004'),
+  embedBatchSize: z.number().int().positive().default(100),
+});
+export type IngestionConfig = z.infer<typeof IngestionSchema>;
+
 export const FileSchema = z.object({
   log: z
     .object({
@@ -73,6 +88,7 @@ export const FileSchema = z.object({
   benchmark: BenchmarkSchema.optional(),
   vector: VectorSchema.optional(),
   persistence: PersistenceSchema.optional(),
+  ingestion: IngestionSchema.optional(),
 });
 export type FileConfig = z.infer<typeof FileSchema>;
 

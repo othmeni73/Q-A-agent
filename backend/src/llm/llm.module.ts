@@ -17,9 +17,14 @@ import { APP_CONFIG, type AppConfig } from '@app/config/schema';
 
 import { GoogleEmbedder } from './adapters/google-embedder.adapter';
 import { MockEmbedder, MockLlmClient } from './adapters/mock-llm.adapter';
+import { OllamaLlmClient } from './adapters/ollama-llm.adapter';
 import { OpenRouterLlmClient } from './adapters/openrouter-llm.adapter';
 import { EMBEDDER, type Embedder } from './ports/embedder.port';
-import { LLM_CLIENT, type LlmClient } from './ports/llm-client.port';
+import {
+  LLM_CLIENT,
+  PREFIX_LLM_CLIENT,
+  type LlmClient,
+} from './ports/llm-client.port';
 import {
   JsonlTraceSink,
   NoopTraceSink,
@@ -92,7 +97,19 @@ function useMockAdapter(config: AppConfig): boolean {
         return new TracingEmbedder(new GoogleEmbedder(key), sink);
       },
     },
+    {
+      provide: PREFIX_LLM_CLIENT,
+      inject: [APP_CONFIG, TRACE_SINK],
+      useFactory: (config: AppConfig, sink: TraceSink): LlmClient => {
+        if (useMockAdapter(config)) {
+          return new TracingLlmClient(new MockLlmClient(), sink);
+        }
+        const baseUrl =
+          config.file.ingestion?.prefixBaseUrl ?? 'http://localhost:11434/v1';
+        return new TracingLlmClient(new OllamaLlmClient({ baseUrl }), sink);
+      },
+    },
   ],
-  exports: [LLM_CLIENT, EMBEDDER],
+  exports: [LLM_CLIENT, EMBEDDER, PREFIX_LLM_CLIENT],
 })
 export class LlmModule {}
