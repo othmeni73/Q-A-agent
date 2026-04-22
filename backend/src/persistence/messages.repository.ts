@@ -54,15 +54,16 @@ export class MessagesRepository {
     );
     // Pull the most recent `limit` messages, then flip to chronological order
     // so the caller gets [oldest, …, newest] — matches how LLM histories are
-    // assembled.
+    // assembled. Secondary sort on `rowid` breaks ties when user+assistant
+    // inserts within one transaction land on the same Date.now() ms.
     this.listForSessionStmt = db.prepare<[string, number]>(
-      `SELECT * FROM (
-         SELECT * FROM messages
+      `SELECT id, sessionId, role, content, citations, createdAt FROM (
+         SELECT *, rowid AS _rid FROM messages
          WHERE sessionId = ?
-         ORDER BY createdAt DESC
+         ORDER BY createdAt DESC, _rid DESC
          LIMIT ?
        )
-       ORDER BY createdAt ASC`,
+       ORDER BY createdAt ASC, _rid ASC`,
     );
   }
 
