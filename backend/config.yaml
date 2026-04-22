@@ -70,3 +70,18 @@ ingestion:
   embedModel: nomic-embed-text
   embedBaseUrl: http://localhost:11434/v1
   embedBatchSize: 100
+
+
+# ── Retrieval (Step 8) ────────────────────────────────────────────
+# Pipeline: embed query + bm25 → dense k=20 / sparse k=20 → RRF → rerank top 8
+# → MMR pick 5. Defaults match README's documented retrieval parameters.
+retrieval:
+  denseK: 20
+  sparseK: 20
+  rerankK: 8
+  finalK: 5
+  mmrLambda: 0.7
+  rrfK: 60
+  # Cross-encoder. Pulled the first time BgeReranker is used; cached under
+  # ~/.cache/huggingface thereafter. Pre-pull is optional.
+  rerankerModel: Xenova/bge-reranker-v2-m3

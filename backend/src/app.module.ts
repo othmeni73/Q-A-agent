@@ -7,6 +7,7 @@ import { HealthModule } from './health/health.module';
 import { IngestionModule } from './ingestion/ingestion.module';
 import { LlmModule } from './llm/llm.module';
 import { PersistenceModule } from './persistence/persistence.module';
+import { RetrievalModule } from './retrieval/retrieval.module';
 import { VectorModule } from './vector/vector.module';
 
 @Module({
@@ -20,6 +21,7 @@ import { VectorModule } from './vector/vector.module';
     PersistenceModule,
     VectorModule,
     IngestionModule,
+    RetrievalModule,
     HealthModule,
   ],
   controllers: [],

@@ -73,6 +73,21 @@ export const IngestionSchema = z.object({
 });
 export type IngestionConfig = z.infer<typeof IngestionSchema>;
 
+/**
+ * Retrieval-time config (Step 8). Optional at top level — defaults match
+ * the README-documented pipeline parameters.
+ */
+export const RetrievalSchema = z.object({
+  denseK: z.number().int().positive().default(20),
+  sparseK: z.number().int().positive().default(20),
+  rerankK: z.number().int().positive().default(8),
+  finalK: z.number().int().positive().default(5),
+  mmrLambda: z.number().min(0).max(1).default(0.7),
+  rrfK: z.number().int().positive().default(60),
+  rerankerModel: z.string().min(1).default('Xenova/bge-reranker-v2-m3'),
+});
+export type RetrievalConfig = z.infer<typeof RetrievalSchema>;
+
 export const FileSchema = z.object({
   log: z
     .object({
@@ -90,6 +105,7 @@ export const FileSchema = z.object({
   vector: VectorSchema.optional(),
   persistence: PersistenceSchema.optional(),
   ingestion: IngestionSchema.optional(),
+  retrieval: RetrievalSchema.optional(),
 });
 export type FileConfig = z.infer<typeof FileSchema>;
 

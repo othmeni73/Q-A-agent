@@ -18,7 +18,9 @@ import { join } from 'node:path';
 
 import { APP_CONFIG, type AppConfig } from '@app/config/schema';
 
+import { BgeReranker } from './adapters/bge-reranker.adapter';
 import { MockEmbedder, MockLlmClient } from './adapters/mock-llm.adapter';
+import { MockReranker } from './adapters/mock-reranker.adapter';
 import { OllamaEmbedder } from './adapters/ollama-embedder.adapter';
 import { OllamaLlmClient } from './adapters/ollama-llm.adapter';
 import { OpenRouterLlmClient } from './adapters/openrouter-llm.adapter';
@@ -28,6 +30,7 @@ import {
   PREFIX_LLM_CLIENT,
   type LlmClient,
 } from './ports/llm-client.port';
+import { RERANKER, type Reranker } from './ports/reranker.port';
 import {
   JsonlTraceSink,
   NoopTraceSink,
@@ -108,7 +111,19 @@ function useMockAdapter(config: AppConfig): boolean {
         return new TracingLlmClient(new OllamaLlmClient({ baseUrl }), sink);
       },
     },
+    {
+      provide: RERANKER,
+      inject: [APP_CONFIG],
+      useFactory: (config: AppConfig): Reranker => {
+        if (useMockAdapter(config)) {
+          return new MockReranker();
+        }
+        const modelId =
+          config.file.retrieval?.rerankerModel ?? 'Xenova/bge-reranker-v2-m3';
+        return new BgeReranker(modelId);
+      },
+    },
   ],
-  exports: [LLM_CLIENT, EMBEDDER, PREFIX_LLM_CLIENT],
+  exports: [LLM_CLIENT, EMBEDDER, PREFIX_LLM_CLIENT, RERANKER],
 })
 export class LlmModule {}
