@@ -18,5 +18,10 @@
     "test:e2e":  "pnpm --filter backend test:e2e",
     "ingest":    "pnpm --filter backend ingest",
     "evaluate":  "pnpm --filter backend evaluate"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "better-sqlite3"
+    ]
   }
 }

@@ -47,6 +47,16 @@ export const VectorSchema = z.object({
 });
 export type VectorConfig = z.infer<typeof VectorSchema>;
 
+/**
+ * Persistence layer config (Step 5). Optional at top level — defaults to
+ * `./data/app.db` when the yaml section is missing. NODE_ENV=test overrides
+ * to `:memory:` inside PersistenceModule regardless of this value.
+ */
+export const PersistenceSchema = z.object({
+  path: z.string().min(1).default('./data/app.db'),
+});
+export type PersistenceConfig = z.infer<typeof PersistenceSchema>;
+
 export const FileSchema = z.object({
   log: z
     .object({
@@ -62,6 +72,7 @@ export const FileSchema = z.object({
     .default({}),
   benchmark: BenchmarkSchema.optional(),
   vector: VectorSchema.optional(),
+  persistence: PersistenceSchema.optional(),
 });
 export type FileConfig = z.infer<typeof FileSchema>;
 
