@@ -7,6 +7,7 @@ import { HealthModule } from './health/health.module';
 import { IngestionModule } from './ingestion/ingestion.module';
 import { LlmModule } from './llm/llm.module';
 import { PersistenceModule } from './persistence/persistence.module';
+import { PromptsModule } from './prompts/prompts.module';
 import { RetrievalModule } from './retrieval/retrieval.module';
 import { VectorModule } from './vector/vector.module';
 
@@ -18,6 +19,7 @@ import { VectorModule } from './vector/vector.module';
       useFactory: (config: AppConfig) => buildLoggerConfig(config),
     }),
     LlmModule,
+    PromptsModule,
     PersistenceModule,
     VectorModule,
     IngestionModule,
