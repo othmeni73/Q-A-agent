@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { LoggerModule } from 'nestjs-pino';
+import { ChatModule } from './chat/chat.module';
 import { AppConfigModule } from './config/config.module';
 import { APP_CONFIG, type AppConfig } from './config/schema';
 import { buildLoggerConfig } from './config/logger.config';
@@ -24,6 +25,7 @@ import { VectorModule } from './vector/vector.module';
     VectorModule,
     IngestionModule,
     RetrievalModule,
+    ChatModule,
     HealthModule,
   ],
   controllers: [],
