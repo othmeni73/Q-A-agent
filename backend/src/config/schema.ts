@@ -67,7 +67,8 @@ export const IngestionSchema = z.object({
   chunkOverlapChars: z.number().int().nonnegative().default(200),
   prefixModel: z.string().min(1).default('gemma2:27b'),
   prefixBaseUrl: z.string().url().default('http://localhost:11434/v1'),
-  embedModel: z.string().min(1).default('text-embedding-004'),
+  embedModel: z.string().min(1).default('nomic-embed-text'),
+  embedBaseUrl: z.string().url().default('http://localhost:11434/v1'),
   embedBatchSize: z.number().int().positive().default(100),
 });
 export type IngestionConfig = z.infer<typeof IngestionSchema>;

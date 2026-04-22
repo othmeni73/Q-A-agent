@@ -48,6 +48,7 @@ describe('ContextualPrefixService', () => {
           prefixModel: 'custom-local',
           prefixBaseUrl: 'http://localhost:11434/v1',
           embedModel: 'text-embedding-004',
+          embedBaseUrl: 'http://localhost:11434/v1',
           embedBatchSize: 100,
         },
       },

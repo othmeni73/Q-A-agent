@@ -1,9 +1,12 @@
 /**
  * Wires the LLM layer for NestJS.
  *
- * Selects the adapter via the `LLM_ADAPTER` env var:
- *   - `mock`  → `MockLlmClient` + `MockEmbedder` (for CI and unit tests)
- *   - default → real `OpenRouterLlmClient` + `GoogleEmbedder` (needs keys)
+ * Selects adapters via `NODE_ENV` / `LLM_ADAPTER`:
+ *   - test or `LLM_ADAPTER=mock` → `MockLlmClient` + `MockEmbedder`
+ *   - default                   → real adapters:
+ *       LLM_CLIENT         → OpenRouter (chat, rewriter)
+ *       PREFIX_LLM_CLIENT  → local Ollama (contextual prefix at ingest)
+ *       EMBEDDER           → local Ollama (dense embeddings at ingest + query)
  *
  * Every adapter is wrapped with its tracing decorator, which writes per-call
  * records to a daily-rotated JSONL file under `backend/traces/YYYY-MM-DD.jsonl`.
@@ -15,8 +18,8 @@ import { join } from 'node:path';
 
 import { APP_CONFIG, type AppConfig } from '@app/config/schema';
 
-import { GoogleEmbedder } from './adapters/google-embedder.adapter';
 import { MockEmbedder, MockLlmClient } from './adapters/mock-llm.adapter';
+import { OllamaEmbedder } from './adapters/ollama-embedder.adapter';
 import { OllamaLlmClient } from './adapters/ollama-llm.adapter';
 import { OpenRouterLlmClient } from './adapters/openrouter-llm.adapter';
 import { EMBEDDER, type Embedder } from './ports/embedder.port';
@@ -88,13 +91,9 @@ function useMockAdapter(config: AppConfig): boolean {
         if (useMockAdapter(config)) {
           return new TracingEmbedder(new MockEmbedder(), sink);
         }
-        const key = process.env['GOOGLE_GENERATIVE_AI_API_KEY'];
-        if (!key) {
-          throw new Error(
-            'GOOGLE_GENERATIVE_AI_API_KEY not set (or set LLM_ADAPTER=mock for test/CI runs)',
-          );
-        }
-        return new TracingEmbedder(new GoogleEmbedder(key), sink);
+        const baseUrl =
+          config.file.ingestion?.embedBaseUrl ?? 'http://localhost:11434/v1';
+        return new TracingEmbedder(new OllamaEmbedder({ baseUrl }), sink);
       },
     },
     {

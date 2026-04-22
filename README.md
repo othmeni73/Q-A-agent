@@ -71,14 +71,15 @@ pnpm dev
 curl -s http://0.0.0.0:3000/health | jq
 ```
 
-Corpus ingestion and evaluation:
+Corpus acquisition, ingestion, and evaluation:
 
 ```bash
-pnpm ingest        # chunks + embeds + upserts the corpus into Qdrant
+pnpm fetch-corpus  # arXiv HTML → ./backend/docs/<arxivId>.md + .meta.json
+pnpm ingest        # ./backend/docs/* → SQLite papers + Qdrant chunks
 pnpm evaluate      # runs the evaluation harness, writes eval/results.json
 ```
 
-All four spec-required scripts (`ingest`, `evaluate`, `dev`, `test`) are runnable from the repo root; the root `package.json` proxies them into the backend workspace via `pnpm --filter backend …`.
+The spec-required scripts (`ingest`, `evaluate`, `dev`, `test`) plus the new `fetch-corpus` are all runnable from the repo root; the root `package.json` proxies them into the backend workspace via `pnpm --filter backend …`.
 
 Day-to-day commands:
 
@@ -91,6 +92,46 @@ Day-to-day commands:
 | `pnpm test:e2e` | Backend e2e tests (Fastify's `app.inject`) |
 | `pnpm typecheck` | `tsc --noEmit` with strict config |
 | `pnpm lint` | ESLint (fails on `any`, floating promises, missing return types) |
+
+---
+
+## Corpus acquisition
+
+The corpus is sourced from arXiv but **kept separate from the ingest pipeline**. Two commands:
+
+```bash
+pnpm fetch-corpus    # arXiv HTML → ./backend/docs/<arxivId>.md + .meta.json
+pnpm ingest          # ./backend/docs → SQLite papers + Qdrant chunks
+```
+
+**Why the split.** The fetcher touches the network and parses HTML; the ingester only reads from disk. Separating them makes the corpus an **inspectable, reproducible artifact** — you can see exactly what text was ingested by looking at `./backend/docs/*.md`, and you can re-ingest without re-hitting arXiv. Adding new data sources later (local PDFs, internal wikis, etc.) is a matter of writing another fetcher that writes to `./backend/docs/`.
+
+**The corpus list** lives at `backend/data/corpus.json` (committed) — a plain JSON array of `{arxivId, category, note}` entries. **43 papers across the 8 categories** from [`choices.md` Decision 1](./choices.md), inside the spec's 30–50 band:
+
+| Cat | Count | Representative papers |
+|---|---:|---|
+| **A. Foundational agent architectures** | 10 | ReAct, Reflexion, Toolformer, Tree of Thoughts, Voyager, Plan-and-Solve, LATS, Generative Agents, Chain-of-Thought, Self-Consistency |
+| **B. Multi-agent & collaboration** | 6 | AutoGen, CAMEL, MetaGPT, ChatDev, AgentVerse, Multi-Agent Debate |
+| **C. Tool use & environments** | 8 | ToolLLM, WebArena, Mind2Web, SWE-bench, SWE-agent, Gorilla, HuggingGPT, ART |
+| **D. Memory & long-context** | 3 | MemGPT, ReWOO, Graph of Thoughts |
+| **E. Self-improvement / reflection** | 4 | Self-Refine, STaR, Self-Discover, Auto-CoT |
+| **F. Agent evaluation benchmarks** | 5 | AgentBench, GAIA, MINT, TravelPlanner, TPTU |
+| **G. Meeting / dialogue summarisation** | 3 | MeetingBank, QMSum, DialogSum |
+| **H. Surveys + 2024–2025 landmarks** | 4 | LLM Autonomous Agents (Wang), Rise & Potential (Xi), Planning Survey (Huang), Tool Learning Survey (Qin) |
+| **Total** | **43** | |
+
+**What the fetcher does per paper**:
+
+1. Downloads `https://arxiv.org/html/<arxivId>`.
+2. Extracts `{title, authors, year, abstract}` from the `<meta name="citation_*">` tags — vastly more reliable than parsing body HTML.
+3. Walks the DOM, emitting markdown: `<section class="ltx_section">` → `## `, `<ltx_subsection>` → `### `, nested levels deeper. This is what the Step-6 section-aware chunker keys off, so retrieved chunks end up tagged `sectionPath: "Methods > Training procedure"` end-to-end.
+4. Replaces `<math alttext="...">` with inline `$...$` so the LaTeX source survives into the embedder rather than being silently dropped ("…the key insight is that ∇L = …" stays meaningful).
+5. Strips `<nav>`, `<footer>`, bibliography blocks, ref tags.
+6. Writes `./backend/docs/<arxivId>.md` (body) + `./backend/docs/<arxivId>.meta.json` (`{arxivId, title, authors, year, abstract, url}` — consumed by the Step-6 ingester to register the canonical paper row in the SQLite `papers` table).
+
+**Rate limiting & resilience.** 500 ms between requests (2 RPS amortised; arXiv's stated policy is 1 request per 3 s per connection, well inside that). Idempotent — re-runs skip papers whose `.md` already exists (pass `--force` to re-download). Per-paper failures (404, parse error, timeout) log and continue; the run never aborts on one bad ID.
+
+**Adding more papers.** Append `{arxivId, category, note}` entries to `backend/data/corpus.json` and re-run `pnpm fetch-corpus`. Only the new IDs hit the network.
 
 ---
 
