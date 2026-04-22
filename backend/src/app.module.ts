@@ -5,6 +5,7 @@ import { APP_CONFIG, type AppConfig } from './config/schema';
 import { buildLoggerConfig } from './config/logger.config';
 import { HealthModule } from './health/health.module';
 import { LlmModule } from './llm/llm.module';
+import { PersistenceModule } from './persistence/persistence.module';
 import { VectorModule } from './vector/vector.module';
 
 @Module({
@@ -15,6 +16,7 @@ import { VectorModule } from './vector/vector.module';
       useFactory: (config: AppConfig) => buildLoggerConfig(config),
     }),
     LlmModule,
+    PersistenceModule,
     VectorModule,
     HealthModule,
   ],

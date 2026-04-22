@@ -46,3 +46,10 @@ vector:
   url: http://localhost:6333
   collection: agentic-systems-papers
   denseSize: 768
+
+
+# ── Persistence (Step 5) ──────────────────────────────────────────
+# Path B: SQLite-backed OLTP store for canonical paper metadata, sessions,
+# and messages. NODE_ENV=test auto-swaps to :memory: inside PersistenceModule.
+persistence:
+  path: ./data/app.db

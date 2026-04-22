@@ -48,3 +48,4 @@ backend/traces/
 choices.md
 step*
 backend/eval/model-selection/results.partial.json
+backend/data/
