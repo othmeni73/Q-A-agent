@@ -101,3 +101,13 @@ export interface LlmClient {
 
 /** Symbol-based DI token. Safer than a string key (no collision risk). */
 export const LLM_CLIENT = Symbol('LLM_CLIENT');
+
+/**
+ * Separate LlmClient bound to a different provider for the 'prefix' role.
+ * Currently points at local Ollama (`gemma2:27b` — same model as the Step-2
+ * benchmark judge and Step-13 eval judge). Splitting the token from LLM_CLIENT
+ * lets the chat/rewrite roles keep hitting OpenRouter while ingestion runs
+ * fully offline on the local 2×P6 split — zero extra API key, zero rate
+ * limits, fully reproducible.
+ */
+export const PREFIX_LLM_CLIENT = Symbol('PREFIX_LLM_CLIENT');

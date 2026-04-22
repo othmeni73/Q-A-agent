@@ -53,3 +53,17 @@ vector:
 # and messages. NODE_ENV=test auto-swaps to :memory: inside PersistenceModule.
 persistence:
   path: ./data/app.db
+
+
+# ── Ingestion pipeline (Step 6) ───────────────────────────────────
+# Consumed by `pnpm ingest`. Missing section → defaults from IngestionSchema.
+ingestion:
+  docsDir: ./docs
+  chunkTargetChars: 2000      # ≈ 500 tokens
+  chunkOverlapChars: 200      # ≈ 50 tokens
+  # Prefix model = same local Ollama instance + model as the Step-2 benchmark
+  # judge. Pre-pull once: `ollama pull gemma2:27b`.
+  prefixModel: gemma2:27b
+  prefixBaseUrl: http://localhost:11434/v1
+  embedModel: text-embedding-004
+  embedBatchSize: 100
