@@ -63,10 +63,12 @@ export class IngestionService {
 
   constructor(
     @Inject(APP_CONFIG) config: AppConfig,
-    private readonly chunker: ChunkerService,
+    @Inject(ChunkerService) private readonly chunker: ChunkerService,
+    @Inject(ContextualPrefixService)
     private readonly prefixer: ContextualPrefixService,
+    @Inject(IngestEmbedderService)
     private readonly embedder: IngestEmbedderService,
-    private readonly papers: PapersRepository,
+    @Inject(PapersRepository) private readonly papers: PapersRepository,
     @Inject(VECTOR_STORE) private readonly store: VectorStore,
   ) {
     this.docsDir = config.file.ingestion?.docsDir ?? DEFAULT_DOCS_DIR;

@@ -25,6 +25,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "ingest": "tsx scripts/ingest.ts",
+    "fetch-corpus": "tsx scripts/fetch-arxiv.ts",
     "evaluate": "echo 'evaluate command lands in Step 12' && exit 1",
     "benchmark:models": "tsx scripts/benchmark-models.ts"
   },
@@ -38,6 +39,7 @@
     "@qdrant/js-client-rest": "^1.17.0",
     "ai": "^6.0.168",
     "better-sqlite3": "^12.9.0",
+    "cheerio": "^1.2.0",
     "dotenv": "^17.4.2",
     "fastify": "^5.0.0",
     "nestjs-pino": "^4.0.0",

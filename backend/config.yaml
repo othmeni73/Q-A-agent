@@ -65,5 +65,8 @@ ingestion:
   # judge. Pre-pull once: `ollama pull gemma2:27b`.
   prefixModel: gemma2:27b
   prefixBaseUrl: http://localhost:11434/v1
-  embedModel: text-embedding-004
+  # Embedder = local Ollama, 768-dim (matches vector.denseSize above).
+  # Pre-pull once: `ollama pull nomic-embed-text`.
+  embedModel: nomic-embed-text
+  embedBaseUrl: http://localhost:11434/v1
   embedBatchSize: 100

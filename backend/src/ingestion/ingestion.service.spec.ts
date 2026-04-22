@@ -29,6 +29,7 @@ function makeConfig(docsDir: string): AppConfig {
         prefixModel: 'm',
         prefixBaseUrl: 'http://localhost:11434/v1',
         embedModel: 'e',
+        embedBaseUrl: 'http://localhost:11434/v1',
         embedBatchSize: 100,
       },
     },

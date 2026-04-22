@@ -17,6 +17,7 @@
     "test":      "pnpm -r test",
     "test:e2e":  "pnpm --filter backend test:e2e",
     "ingest":    "pnpm --filter backend ingest",
+    "fetch-corpus": "pnpm --filter backend fetch-corpus",
     "evaluate":  "pnpm --filter backend evaluate"
   },
   "pnpm": {

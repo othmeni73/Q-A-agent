@@ -5,6 +5,8 @@
  * `IngestionService`, runs it, prints the summary, closes the context.
  */
 
+import 'dotenv/config'; // MUST be first — populates process.env from backend/.env before Nest reads keys.
+
 import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from '@app/app.module';
