@@ -119,7 +119,7 @@ function useMockAdapter(config: AppConfig): boolean {
           return new MockReranker();
         }
         const modelId =
-          config.file.retrieval?.rerankerModel ?? 'Xenova/bge-reranker-v2-m3';
+          config.file.retrieval?.rerankerModel ?? 'Xenova/bge-reranker-large';
         return new BgeReranker(modelId);
       },
     },

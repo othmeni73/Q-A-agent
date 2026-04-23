@@ -84,7 +84,10 @@ retrieval:
   rrfK: 60
   # Cross-encoder. Pulled the first time BgeReranker is used; cached under
   # ~/.cache/huggingface thereafter. Pre-pull is optional.
-  rerankerModel: Xenova/bge-reranker-v2-m3
+  # Xenova hosts bge-reranker-{base,large}; v2-m3 is not available under the
+  # Xenova org. `large` is the quality pick (~550 MB ONNX, ~400 ms/batch on CPU);
+  # switch to `base` if cold-start is painful.
+  rerankerModel: Xenova/bge-reranker-large
 
 
 # ── Chat (Step 11) ────────────────────────────────────────────────

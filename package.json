@@ -9,7 +9,7 @@
     "node": ">=22"
   },
   "scripts": {
-    "dev":       "pnpm --filter backend dev",
+    "dev":       "pnpm --filter backend start:dev",
     "build":     "pnpm -r build",
     "start":     "pnpm --filter backend start",
     "lint":      "pnpm -r lint",
@@ -22,7 +22,9 @@
   },
   "pnpm": {
     "onlyBuiltDependencies": [
-      "better-sqlite3"
+      "better-sqlite3",
+      "sharp",
+      "protobufjs"
     ]
   }
 }
