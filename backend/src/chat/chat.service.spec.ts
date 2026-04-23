@@ -9,6 +9,8 @@ import type { RetrievalService } from '@app/retrieval/retrieval.service';
 import type { RetrievalHit } from '@app/retrieval/types';
 
 import { ChatService } from './chat.service';
+import type { ResolvedCitation } from './citations.schema';
+import type { CitationsService } from './citations.service';
 import type { SessionService } from './session.service';
 
 function baseConfig(
@@ -75,6 +77,12 @@ function mockRetrieval(hits: RetrievalHit[] = []): RetrievalService {
   } as unknown as RetrievalService;
 }
 
+function mockCitations(out: ResolvedCitation[] = []): CitationsService {
+  return {
+    pick: jest.fn().mockResolvedValue(out),
+  } as unknown as CitationsService;
+}
+
 function mockLlm(textChunks: string[] = ['hello', ' world']): LlmClient {
   const stream: StreamResult = {
     textStream: (async function* () {
@@ -123,6 +131,7 @@ describe('ChatService.startTurn', () => {
       mockPrompts(),
       mockSessions(),
       mockRetrieval(),
+      mockCitations(),
       mockLlm(),
     );
     await expect(
@@ -143,6 +152,7 @@ describe('ChatService.startTurn', () => {
       mockPrompts(),
       mockSessions(),
       retrieval,
+      mockCitations(),
       llm,
     );
     await svc.startTurn({
@@ -167,6 +177,7 @@ describe('ChatService.startTurn', () => {
       mockPrompts(),
       mockSessions(),
       mockRetrieval(),
+      mockCitations(),
       llm,
     );
     await svc.startTurn({
@@ -206,6 +217,7 @@ describe('ChatService.startTurn', () => {
       mockPrompts(),
       sessions,
       mockRetrieval(),
+      mockCitations(),
       llm,
     );
     await svc.startTurn({
@@ -229,6 +241,7 @@ describe('ChatService.startTurn', () => {
       mockPrompts(),
       sessions,
       mockRetrieval(),
+      mockCitations(),
       llm,
     );
     await svc.startTurn({
@@ -246,6 +259,7 @@ describe('ChatService.startTurn', () => {
       mockPrompts(),
       mockSessions(),
       mockRetrieval(),
+      mockCitations(),
       llm,
     );
     const ctrl = new AbortController();
@@ -268,6 +282,7 @@ describe('ChatService.startTurn', () => {
       mockPrompts(),
       mockSessions(),
       mockRetrieval(),
+      mockCitations(),
       llm,
     );
     await svc.startTurn({
@@ -281,13 +296,22 @@ describe('ChatService.startTurn', () => {
     expect(args.maxOutputTokens).toBe(512);
   });
 
-  it('complete() persists the turn via SessionService.appendTurn and returns empty citations', async () => {
+  it('complete() persists the turn via SessionService.appendTurn and returns enriched citations', async () => {
     const sessions = mockSessions('resolved-id');
+    const cites: ResolvedCitation[] = [
+      {
+        n: 1,
+        sourceTitle: 'Reflexion',
+        chunkIndex: 0,
+        paperId: 'p-1',
+      },
+    ];
     const svc = new ChatService(
       baseConfig(),
       mockPrompts(),
       sessions,
       mockRetrieval(),
+      mockCitations(cites),
       mockLlm(),
     );
     const handle = await svc.startTurn({
@@ -300,9 +324,9 @@ describe('ChatService.startTurn', () => {
       undefined,
       'q',
       'full answer',
-      [],
+      cites,
     );
-    expect(result.citations).toEqual([]);
+    expect(result.citations).toEqual(cites);
     expect(handle.sessionId).toBe('resolved-id');
   });
 
@@ -312,6 +336,7 @@ describe('ChatService.startTurn', () => {
       mockPrompts(),
       mockSessions(),
       mockRetrieval(),
+      mockCitations(),
       mockLlm(),
     );
     const handle = await svc.startTurn({

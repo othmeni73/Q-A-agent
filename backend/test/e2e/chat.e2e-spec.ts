@@ -78,6 +78,7 @@ describe('POST /chat (e2e)', () => {
     expect(parsed.deltas.length).toBeGreaterThan(0);
     expect(parsed.done).toBeDefined();
     expect(parsed.done!.sessionId).toMatch(/^[0-9a-f-]{36}$/);
+    expect(Array.isArray(parsed.done!.citations)).toBe(true);
   });
 
   it('second turn in the same session echoes the same sessionId', async () => {

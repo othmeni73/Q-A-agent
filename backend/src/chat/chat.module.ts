@@ -4,6 +4,7 @@ import { RetrievalModule } from '@app/retrieval/retrieval.module';
 
 import { ChatController } from './chat.controller';
 import { ChatService } from './chat.service';
+import { CitationsService } from './citations.service';
 import { SessionService } from './session.service';
 
 /**
@@ -21,7 +22,7 @@ import { SessionService } from './session.service';
 @Module({
   imports: [RetrievalModule],
   controllers: [ChatController],
-  providers: [ChatService, SessionService],
+  providers: [ChatService, CitationsService, SessionService],
   exports: [SessionService],
 })
 export class ChatModule {}

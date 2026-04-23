@@ -30,6 +30,8 @@ import { PromptLoaderService } from '@app/prompts/prompt-loader.service';
 import { RetrievalService } from '@app/retrieval/retrieval.service';
 import type { RetrievalHit } from '@app/retrieval/types';
 
+import type { ResolvedCitation } from './citations.schema';
+import { CitationsService } from './citations.service';
 import { SessionService } from './session.service';
 
 export interface ChatTurnInput {
@@ -48,7 +50,7 @@ export interface ChatTurnHandle {
    * messages atomically and returns citation payload for the `done` SSE event.
    * If the stream errors or aborts, DO NOT call complete().
    */
-  complete: (finalText: string) => Promise<{ citations: unknown[] }>;
+  complete: (finalText: string) => Promise<{ citations: ResolvedCitation[] }>;
 }
 
 @Injectable()
@@ -60,6 +62,7 @@ export class ChatService {
     @Inject(PromptLoaderService) private readonly prompts: PromptLoaderService,
     @Inject(SessionService) private readonly sessions: SessionService,
     @Inject(RetrievalService) private readonly retrieval: RetrievalService,
+    @Inject(CitationsService) private readonly citations: CitationsService,
     @Inject(LLM_CLIENT) private readonly llm: LlmClient,
   ) {}
 
@@ -106,18 +109,21 @@ export class ChatService {
     });
 
     // `complete` is a deferred closure. Controller calls it after stream drain.
-    // Closure captures sessionId + chat text; resolved session id is stored
-    // on the handle via the getter below.
+    // Closure captures sessionId + chat text + hits; resolved session id is
+    // stored on the handle via the getter below.
     let resolvedId = input.sessionId ?? '';
-    const complete = (finalText: string): Promise<{ citations: unknown[] }> => {
+    const complete = async (
+      finalText: string,
+    ): Promise<{ citations: ResolvedCitation[] }> => {
+      const citations = await this.citations.pick(finalText, hits);
       const resolved = this.sessions.appendTurn(
         input.sessionId,
         chat,
         finalText,
-        [], // citations: Step 12 fills via generateObject
+        citations,
       );
       resolvedId = resolved.id;
-      return Promise.resolve({ citations: [] });
+      return { citations };
     };
 
     this.logger.debug(
