@@ -84,7 +84,7 @@ export const RetrievalSchema = z.object({
   finalK: z.number().int().positive().default(5),
   mmrLambda: z.number().min(0).max(1).default(0.7),
   rrfK: z.number().int().positive().default(60),
-  rerankerModel: z.string().min(1).default('Xenova/bge-reranker-v2-m3'),
+  rerankerModel: z.string().min(1).default('Xenova/bge-reranker-large'),
 });
 export type RetrievalConfig = z.infer<typeof RetrievalSchema>;
 
