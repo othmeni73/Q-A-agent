@@ -11,7 +11,8 @@ export type LlmRole =
   | 'rewriter'
   | 'prefix'
   | 'judge-pairwise'
-  | 'judge-pointwise';
+  | 'judge-pointwise'
+  | 'citation-picker';
 
 /** Token usage reported by the provider (bytes-to-bill). */
 export interface Usage {
