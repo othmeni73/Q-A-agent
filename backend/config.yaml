@@ -85,3 +85,14 @@ retrieval:
   # Cross-encoder. Pulled the first time BgeReranker is used; cached under
   # ~/.cache/huggingface thereafter. Pre-pull is optional.
   rerankerModel: Xenova/bge-reranker-v2-m3
+
+
+# ── Chat (Step 11) ────────────────────────────────────────────────
+# Consumed by ChatService. `model` is the OpenRouter id locked by the
+# Step 2 benchmark (see backend/eval/model-selection/results.json).
+chat:
+  model: nvidia/nemotron-3-super-120b-a12b:free
+  temperature: 0.2
+  maxOutputTokens: 1024
+  refusalString: "I don't have information on that in the current knowledge base."
+  userName: the user

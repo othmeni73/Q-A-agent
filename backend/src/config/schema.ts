@@ -88,6 +88,30 @@ export const RetrievalSchema = z.object({
 });
 export type RetrievalConfig = z.infer<typeof RetrievalSchema>;
 
+/**
+ * Chat-time config (Step 11). Required at top level — the chat route is the
+ * main product surface; fail fast at boot if the yaml section is missing.
+ */
+export const ChatSchema = z.object({
+  /** Fully-qualified provider model id for the chat role. */
+  model: z.string().min(1),
+  /** Sampling temperature. 0.2 keeps answers anchored to context. */
+  temperature: z.number().min(0).max(2).default(0.2),
+  /** Per-turn generation budget. */
+  maxOutputTokens: z.number().int().positive().default(1024),
+  /**
+   * Verbatim refusal string the chat prompt interpolates. Must match the
+   * string used in `benchmark.refusalString` when eval cross-compares.
+   */
+  refusalString: z
+    .string()
+    .min(1)
+    .default("I don't have information on that in the current knowledge base."),
+  /** Friendly form of address for the end user. */
+  userName: z.string().min(1).default('the user'),
+});
+export type ChatConfig = z.infer<typeof ChatSchema>;
+
 export const FileSchema = z.object({
   log: z
     .object({
@@ -106,6 +130,7 @@ export const FileSchema = z.object({
   persistence: PersistenceSchema.optional(),
   ingestion: IngestionSchema.optional(),
   retrieval: RetrievalSchema.optional(),
+  chat: ChatSchema.optional(),
 });
 export type FileConfig = z.infer<typeof FileSchema>;
 
