@@ -1,0 +1,148 @@
+{
+  "runId": "run-2026-04-24T11:40:29.592Z",
+  "startedAt": "2026-04-24T11:40:29.592Z",
+  "finishedAt": "2026-04-24T12:13:25.002Z",
+  "commit": "",
+  "aggregate": {
+    "+full": {
+      "recallAtK": 0.1111111111111111,
+      "mrr": 0.2222222222222222,
+      "relevance": {
+        "mean": 3.7777777777777777,
+        "std": 1.547598697464902,
+        "n": 9
+      },
+      "groundedness": {
+        "mean": 4.25,
+        "std": 1.299038105676658,
+        "n": 8
+      },
+      "faithfulness": {
+        "mean": 3.875,
+        "std": 1.165922381636102,
+        "n": 8
+      },
+      "completeness": {
+        "mean": 3.2222222222222223,
+        "std": 1.9309052441091963,
+        "n": 9
+      },
+      "failureRate": 0.2222222222222222,
+      "citationAccuracyPct": 87.5,
+      "refusalCorrectPct": 100,
+      "refusalRatePct": 38.46153846153847,
+      "successRatePct": 100,
+      "avgInputTokens": 2205.076923076923,
+      "avgOutputTokens": 157.30769230769232,
+      "avgTotalTokens": 2362.3846153846152,
+      "p50LatencyMs": 11495,
+      "p95LatencyMs": 38253,
+      "byCategory": {
+        "factual": {
+          "n": 5,
+          "recallAtK": 0.1,
+          "mrr": 0.2,
+          "relevance": {
+            "mean": 3.8,
+            "std": 1.4696938456699071,
+            "n": 5
+          },
+          "groundedness": {
+            "mean": 4.75,
+            "std": 0.4330127018922193,
+            "n": 4
+          },
+          "faithfulness": {
+            "mean": 4.25,
+            "std": 0.4330127018922193,
+            "n": 4
+          },
+          "completeness": {
+            "mean": 3,
+            "std": 1.7888543819998317,
+            "n": 5
+          },
+          "citationAccuracyPct": 100,
+          "successRatePct": 100,
+          "failureRate": 0.2
+        },
+        "multi-doc": {
+          "n": 2,
+          "recallAtK": 0.25,
+          "mrr": 0.5,
+          "relevance": {
+            "mean": 3,
+            "std": 2,
+            "n": 2
+          },
+          "groundedness": {
+            "mean": 5,
+            "std": 0,
+            "n": 1
+          },
+          "faithfulness": {
+            "mean": 5,
+            "std": 0,
+            "n": 1
+          },
+          "completeness": {
+            "mean": 2.5,
+            "std": 2.5,
+            "n": 2
+          },
+          "citationAccuracyPct": 100,
+          "successRatePct": 100,
+          "failureRate": 0.5
+        },
+        "out-of-scope": {
+          "n": 2
+        },
+        "adversarial": {
+          "n": 1
+        },
+        "ambiguous": {
+          "n": 1,
+          "groundedness": {
+            "mean": 1,
+            "std": 0,
+            "n": 1
+          },
+          "faithfulness": {
+            "mean": 1,
+            "std": 0,
+            "n": 1
+          },
+          "citationAccuracyPct": 0
+        },
+        "follow-up": {
+          "n": 2,
+          "recallAtK": 0,
+          "mrr": 0,
+          "relevance": {
+            "mean": 4.5,
+            "std": 0.5,
+            "n": 2
+          },
+          "groundedness": {
+            "mean": 4.5,
+            "std": 0.5,
+            "n": 2
+          },
+          "faithfulness": {
+            "mean": 4,
+            "std": 0,
+            "n": 2
+          },
+          "completeness": {
+            "mean": 4.5,
+            "std": 0.5,
+            "n": 2
+          },
+          "citationAccuracyPct": 100,
+          "successRatePct": 100,
+          "failureRate": 0
+        }
+      }
+    }
+  }
+}

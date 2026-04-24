@@ -22,7 +22,11 @@ export interface TraceRecord {
   model: string;
   /** Caller role (`LlmRole` or `EmbedRole`). Kept as string so both unions fit one field. */
   role: string;
-  operation: 'generateText' | 'generateObject' | 'stream' | 'embed';
+  operation: 'generateText' | 'generateObject' | 'stream' | 'embed' | 'rerank';
+  /** Optional correlation id threaded from chat controller → retrieval + LLM. */
+  correlationId?: string;
+  /** Only populated for `rerank` records — number of docs scored in the batch. */
+  batchSize?: number;
   usage: TraceUsage;
   latencyMs: number;
   /** Present only for `stream` operations. */

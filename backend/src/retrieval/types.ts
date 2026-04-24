@@ -26,4 +26,6 @@ export interface TopKOpts {
   mmr?: boolean;
   /** Optional metadata filter passed straight through to the vector store. */
   filter?: Record<string, string | number | boolean>;
+  /** Step 13: correlation id threaded from the chat controller for post-hoc joining. */
+  correlationId?: string;
 }

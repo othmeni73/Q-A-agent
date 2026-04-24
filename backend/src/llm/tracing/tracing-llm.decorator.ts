@@ -89,6 +89,7 @@ export class TracingLlmClient implements LlmClient {
           latencyMs: meta.latencyMs,
           ttftMs: meta.ttftMs,
           finishReason: meta.finishReason,
+          correlationId: opts.correlationId,
         });
         return meta;
       },

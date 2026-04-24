@@ -15,6 +15,7 @@
  */
 
 import { Body, Controller, Logger, Post, Res } from '@nestjs/common';
+import { randomUUID } from 'node:crypto';
 import type { FastifyReply } from 'fastify';
 import { ZodError } from 'zod';
 
@@ -63,12 +64,14 @@ export class ChatController {
     });
 
     // 4. Kick off the chat turn.
+    const correlationId = randomUUID();
     let handle: ChatTurnHandle;
     try {
       handle = await this.chat.startTurn({
         sessionId: parsed.sessionId,
         message: parsed.message,
         signal: controller.signal,
+        correlationId,
       });
     } catch (err) {
       this.writeEvent(reply, 'error', {

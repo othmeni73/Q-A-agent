@@ -7,9 +7,13 @@ import { QdrantVectorStore } from './adapters/qdrant-vector-store.adapter';
 import { VECTOR_STORE, type VectorStore } from './ports/vector-store.port';
 
 function useFakeAdapter(config: AppConfig): boolean {
-  return (
-    config.env.NODE_ENV === 'test' || process.env['VECTOR_ADAPTER'] === 'fake'
-  );
+  // Symmetric with LlmModule.useMockAdapter — explicit 'real'/'fake' wins
+  // over the NODE_ENV=test default. The eval harness sets VECTOR_ADAPTER=real
+  // (NODE_ENV=test is already set for :memory: SQLite).
+  const explicit = process.env['VECTOR_ADAPTER'];
+  if (explicit === 'fake') return true;
+  if (explicit === 'real') return false;
+  return config.env.NODE_ENV === 'test';
 }
 
 @Global()
