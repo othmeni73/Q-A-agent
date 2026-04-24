@@ -112,6 +112,28 @@ export const ChatSchema = z.object({
 });
 export type ChatConfig = z.infer<typeof ChatSchema>;
 
+/**
+ * Evaluation-harness config (Step 13). Consumed by `pnpm evaluate`.
+ * Optional at top level — the main app boot path doesn't need it.
+ */
+export const EvalSchema = z.object({
+  casesPath: z.string().min(1).default('./eval/cases.json'),
+  resultsPath: z.string().min(1).default('./eval/results.json'),
+  baselinePath: z.string().min(1).default('./eval/baseline.json'),
+  concurrency: z.number().int().positive().default(2),
+  judgeModel: z.string().min(1).default('gemma2:27b'),
+  judgeBaseUrl: z.string().url().default('http://localhost:11434/v1'),
+  retrievalK: z.number().int().positive().default(5),
+  successThresholds: z
+    .object({
+      relevance: z.number().min(1).max(5).default(4),
+      groundedness: z.number().min(1).max(5).default(4),
+    })
+    .default({}),
+  failureThreshold: z.number().min(1).max(5).default(2),
+});
+export type EvalConfig = z.infer<typeof EvalSchema>;
+
 export const FileSchema = z.object({
   log: z
     .object({
@@ -131,6 +153,7 @@ export const FileSchema = z.object({
   ingestion: IngestionSchema.optional(),
   retrieval: RetrievalSchema.optional(),
   chat: ChatSchema.optional(),
+  eval: EvalSchema.optional(),
 });
 export type FileConfig = z.infer<typeof FileSchema>;
 

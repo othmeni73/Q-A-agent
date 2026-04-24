@@ -28,7 +28,7 @@ import {
 } from '@app/llm/ports/llm-client.port';
 import { PromptLoaderService } from '@app/prompts/prompt-loader.service';
 import { RetrievalService } from '@app/retrieval/retrieval.service';
-import type { RetrievalHit } from '@app/retrieval/types';
+import type { RetrievalHit, TopKOpts } from '@app/retrieval/types';
 
 import type { ResolvedCitation } from './citations.schema';
 import { CitationsService } from './citations.service';
@@ -38,6 +38,10 @@ export interface ChatTurnInput {
   sessionId: string | undefined;
   message: string;
   signal: AbortSignal;
+  /** Step 13: threaded into retrieval + LLM traces for post-hoc join. */
+  correlationId?: string;
+  /** Step 13: ablation toggles for retrieval (rerank/mmr). Default = full pipeline. */
+  retrievalOpts?: Pick<TopKOpts, 'rerank' | 'mmr'>;
 }
 
 export interface ChatTurnHandle {
@@ -45,6 +49,8 @@ export interface ChatTurnHandle {
   sessionId: string;
   /** LLM stream. Controller iterates `result.textStream` and writes SSE deltas. */
   result: StreamResult;
+  /** Retrieved hits used to build the user turn. Exposed for Step-13 eval. */
+  hits: RetrievalHit[];
   /**
    * Call once after the stream finishes successfully. Persists user+assistant
    * messages atomically and returns citation payload for the `done` SSE event.
@@ -71,7 +77,11 @@ export class ChatService {
     const chat = input.message;
 
     // 1. Retrieve context for the new user message.
-    const hits = await this.retrieval.topK(chat, {});
+    const hits = await this.retrieval.topK(chat, {
+      correlationId: input.correlationId,
+      rerank: input.retrievalOpts?.rerank,
+      mmr: input.retrievalOpts?.mmr,
+    });
 
     // 2. Load history if sessionId provided. Unknown ids → [] (lazy create
     //    happens in appendTurn, preserving Step 10's atomicity rule).
@@ -106,6 +116,7 @@ export class ChatService {
       temperature: chatCfg.temperature,
       maxOutputTokens: chatCfg.maxOutputTokens,
       signal: input.signal,
+      correlationId: input.correlationId,
     });
 
     // `complete` is a deferred closure. Controller calls it after stream drain.
@@ -135,6 +146,7 @@ export class ChatService {
         return resolvedId;
       },
       result,
+      hits,
       complete,
     };
   }

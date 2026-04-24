@@ -60,6 +60,20 @@ export class CitationsService {
       }
     }
 
+    // Defensive: the LLM-based picker can return {used: []} when it either
+    // fails to recognise inline markers OR when the answer genuinely cites
+    // nothing. If the answer text DOES contain [N] markers, trust the regex —
+    // those markers came from the chat model per the system prompt.
+    if (indices.length === 0) {
+      const regexIndices = extractRegex(answer);
+      if (regexIndices.length > 0) {
+        this.logger.debug(
+          `citation-picker returned empty; using regex-extracted [${regexIndices.join(',')}] from answer`,
+        );
+        indices = regexIndices;
+      }
+    }
+
     return enrich(indices, hits);
   }
 

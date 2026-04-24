@@ -2,10 +2,14 @@
  * End-to-end retrieval: query → hybrid search → RRF → rerank → MMR → top-k.
  *
  * Stages are individually toggleable via `TopKOpts` so Step-13 eval ablations
- * (`baseline` / `+hybrid+rerank` / `+full`) can run against the same service.
+ * (`baseline` / `+rerank` / `+full`) can run against the same service.
+ *
+ * Emits a structured `op: "retrieval"` trace record per `topK()` call via the
+ * injected `RetrievalTracer` — per-stage timings + top-k hit ids, joinable
+ * post-hoc by correlationId against the LLM trace lane for per-case cost.
  */
 
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Optional } from '@nestjs/common';
 
 import { APP_CONFIG, type AppConfig } from '@app/config/schema';
 import { bm25Tokens } from '@app/ingestion/sparse-tokenizer';
@@ -18,6 +22,11 @@ import {
 
 import { mmrSelect } from './mmr';
 import { rrfFuse } from './rrf';
+import {
+  RETRIEVAL_TRACER,
+  type RetrievalStageTrace,
+  type RetrievalTracer,
+} from './tracing/retrieval-tracer';
 import type { RetrievalHit, TopKOpts } from './types';
 
 const DEFAULT_DENSE_K = 20;
@@ -29,7 +38,6 @@ const DEFAULT_COLLECTION = 'agentic-systems-papers';
 
 @Injectable()
 export class RetrievalService {
-  private readonly logger = new Logger(RetrievalService.name);
   private readonly collection: string;
   private readonly embedModel: string;
 
@@ -38,6 +46,9 @@ export class RetrievalService {
     @Inject(EMBEDDER) private readonly embedder: Embedder,
     @Inject(RERANKER) private readonly reranker: Reranker,
     @Inject(VECTOR_STORE) private readonly store: VectorStore,
+    @Optional()
+    @Inject(RETRIEVAL_TRACER)
+    private readonly tracer: RetrievalTracer | null = null,
   ) {
     this.collection = config.file.vector?.collection ?? DEFAULT_COLLECTION;
     this.embedModel = config.file.ingestion?.embedModel ?? DEFAULT_EMBED_MODEL;
@@ -50,6 +61,7 @@ export class RetrievalService {
     const doMmr = opts.mmr ?? true;
 
     // Stage 1 — embed + tokenise the query.
+    const embedStart = Date.now();
     const embedRes = await this.embedder.embed({
       model: this.embedModel,
       role: 'query',
@@ -57,16 +69,19 @@ export class RetrievalService {
     });
     const queryVector = embedRes.embeddings[0];
     const sparse = bm25Tokens(query);
-    const tEmbed = Date.now() - t0;
+    const embedTrace: RetrievalStageTrace = {
+      latencyMs: Date.now() - embedStart,
+    };
 
     // Stage 2 — dense + sparse, in parallel.
+    const searchStart = Date.now();
     const [dense, sparseHits] = await Promise.all([
       this.store.queryDense({
         collection: this.collection,
         queryVector,
         k: DEFAULT_DENSE_K,
         filter: opts.filter,
-        withVector: doMmr, // need dense vectors back for MMR if it'll run
+        withVector: doMmr,
       }),
       this.store.querySparse({
         collection: this.collection,
@@ -75,15 +90,60 @@ export class RetrievalService {
         filter: opts.filter,
       }),
     ]);
-    const tSearch = Date.now() - t0 - tEmbed;
+    const searchEnd = Date.now();
+    const denseTrace: RetrievalStageTrace = {
+      k: DEFAULT_DENSE_K,
+      latencyMs: searchEnd - searchStart,
+      hits: dense.slice(0, 5).map((h, i) => ({
+        id: h.id,
+        rank: i + 1,
+        score: h.score,
+      })),
+    };
+    const sparseTrace: RetrievalStageTrace = {
+      k: DEFAULT_SPARSE_K,
+      latencyMs: searchEnd - searchStart,
+      hits: sparseHits.slice(0, 5).map((h, i) => ({
+        id: h.id,
+        rank: i + 1,
+        score: h.score,
+      })),
+    };
 
     // Stage 3 — RRF fuse the two lists.
+    const rrfStart = Date.now();
     const fused = rrfFuse([dense, sparseHits]);
-    if (fused.length === 0) return [];
+    const rrfTrace: RetrievalStageTrace = {
+      latencyMs: Date.now() - rrfStart,
+      hits: fused.slice(0, 5).map((h, i) => ({
+        id: h.id,
+        rank: i + 1,
+        score: h.fusedScore ?? 0,
+      })),
+    };
+    if (fused.length === 0) {
+      this.tracer?.write({
+        ts: new Date().toISOString(),
+        op: 'retrieval',
+        correlationId: opts.correlationId,
+        queryHash: hashQuery(query),
+        stages: {
+          embed: embedTrace,
+          dense: denseTrace,
+          sparse: sparseTrace,
+          rrf: rrfTrace,
+        },
+        totalLatencyMs: Date.now() - t0,
+        finalHitCount: 0,
+      });
+      return [];
+    }
 
     // Stage 4 — cross-encoder rerank (optional).
     let reranked: RetrievalHit[] = fused;
+    let rerankTrace: RetrievalStageTrace | undefined;
     if (doRerank) {
+      const rerankStart = Date.now();
       const top = fused.slice(0, DEFAULT_RERANK_K);
       const scores = await this.reranker.score({
         query,
@@ -95,15 +155,23 @@ export class RetrievalService {
       reranked = top
         .map((h, i) => ({ ...h, rerankScore: scores[i] ?? 0 }))
         .sort((a, b) => (b.rerankScore ?? 0) - (a.rerankScore ?? 0));
+      rerankTrace = {
+        k: DEFAULT_RERANK_K,
+        latencyMs: Date.now() - rerankStart,
+        hits: reranked.slice(0, 5).map((h, i) => ({
+          id: h.id,
+          rank: i + 1,
+          score: h.rerankScore ?? 0,
+        })),
+      };
     }
-    const tRerank = Date.now() - t0 - tEmbed - tSearch;
 
     // Stage 5 — MMR diversify (optional).
     let finalHits: RetrievalHit[];
+    let mmrTrace: RetrievalStageTrace | undefined;
     if (doMmr) {
+      const mmrStart = Date.now();
       finalHits = mmrSelect(reranked, { queryVector, k });
-      // If MMR dropped items (e.g., candidates without dense vectors), fall
-      // back to pre-MMR order for the missing slots.
       if (finalHits.length < k) {
         const seen = new Set(finalHits.map((h) => h.id));
         for (const h of reranked) {
@@ -111,20 +179,40 @@ export class RetrievalService {
           if (!seen.has(h.id)) finalHits.push(h);
         }
       }
+      mmrTrace = {
+        k,
+        latencyMs: Date.now() - mmrStart,
+        hits: finalHits.map((h, i) => ({
+          id: h.id,
+          rank: i + 1,
+          score: h.mmrScore ?? h.rerankScore ?? h.fusedScore ?? 0,
+        })),
+      };
     } else {
       finalHits = reranked.slice(0, k);
     }
 
-    this.logger.debug(
-      `topK "${hashQuery(query)}" — embed=${tEmbed}ms search=${tSearch}ms rerank=${tRerank}ms total=${
-        Date.now() - t0
-      }ms hits=${finalHits.length}`,
-    );
+    this.tracer?.write({
+      ts: new Date().toISOString(),
+      op: 'retrieval',
+      correlationId: opts.correlationId,
+      queryHash: hashQuery(query),
+      stages: {
+        embed: embedTrace,
+        dense: denseTrace,
+        sparse: sparseTrace,
+        rrf: rrfTrace,
+        rerank: rerankTrace,
+        mmr: mmrTrace,
+      },
+      totalLatencyMs: Date.now() - t0,
+      finalHitCount: finalHits.length,
+    });
+
     return finalHits;
   }
 }
 
-/** Short stable fingerprint of the query for logs (no PII). */
 function hashQuery(s: string): string {
   let h = 0;
   for (let i = 0; i < s.length; i++) {

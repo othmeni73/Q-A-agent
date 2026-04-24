@@ -4,6 +4,7 @@ import { ChatModule } from './chat/chat.module';
 import { AppConfigModule } from './config/config.module';
 import { APP_CONFIG, type AppConfig } from './config/schema';
 import { buildLoggerConfig } from './config/logger.config';
+import { EvaluationModule } from './evaluation/evaluation.module';
 import { HealthModule } from './health/health.module';
 import { IngestionModule } from './ingestion/ingestion.module';
 import { LlmModule } from './llm/llm.module';
@@ -26,6 +27,7 @@ import { VectorModule } from './vector/vector.module';
     IngestionModule,
     RetrievalModule,
     ChatModule,
+    EvaluationModule,
     HealthModule,
   ],
   controllers: [],

@@ -26,7 +26,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "ingest": "tsx scripts/ingest.ts",
     "fetch-corpus": "tsx scripts/fetch-arxiv.ts",
-    "evaluate": "echo 'evaluate command lands in Step 12' && exit 1",
+    "evaluate": "tsx scripts/evaluate.ts",
     "benchmark:models": "tsx scripts/benchmark-models.ts"
   },
   "dependencies": {
@@ -95,6 +95,9 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "setupFiles": [
+      "<rootDir>/test-setup.ts"
+    ]
   }
 }

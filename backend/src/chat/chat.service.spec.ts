@@ -161,7 +161,11 @@ describe('ChatService.startTurn', () => {
       signal: new AbortController().signal,
     });
 
-    expect(retrieval.topK).toHaveBeenCalledWith('question', {});
+    expect(retrieval.topK).toHaveBeenCalledWith('question', {
+      correlationId: undefined,
+      rerank: undefined,
+      mmr: undefined,
+    });
     const { messages } = capturedStreamArgs(llm);
     const userTurn = messages[messages.length - 1];
     expect(userTurn.role).toBe('user');

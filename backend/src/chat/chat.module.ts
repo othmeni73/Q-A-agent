@@ -23,6 +23,6 @@ import { SessionService } from './session.service';
   imports: [RetrievalModule],
   controllers: [ChatController],
   providers: [ChatService, CitationsService, SessionService],
-  exports: [SessionService],
+  exports: [SessionService, ChatService],
 })
 export class ChatModule {}

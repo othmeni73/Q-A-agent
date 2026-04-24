@@ -16,8 +16,9 @@
     "typecheck": "pnpm -r typecheck",
     "test":      "pnpm -r test",
     "test:e2e":  "pnpm --filter backend test:e2e",
-    "ingest":    "pnpm --filter backend ingest",
+    "ingest":    "pnpm fetch-corpus && pnpm --filter backend ingest",
     "fetch-corpus": "pnpm --filter backend fetch-corpus",
+    "ingest:only": "pnpm --filter backend ingest",
     "evaluate":  "pnpm --filter backend evaluate"
   },
   "pnpm": {

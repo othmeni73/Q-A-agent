@@ -1,0 +1,2163 @@
+{
+  "runId": "run-2026-04-24T11:40:29.592Z",
+  "startedAt": "2026-04-24T11:40:29.592Z",
+  "finishedAt": "2026-04-24T12:13:25.002Z",
+  "commit": "",
+  "lanes": {
+    "baseline": [
+      {
+        "caseId": "factual-reflexion-react",
+        "category": "factual",
+        "lane": "baseline",
+        "answer": "Reflexion adds a verbal self‑reflection loop that turns binary or scalar environment feedback into a textual summary (verbal feedback) and appends it as additional context for the LLM agent in the next episode, enabling the agent to learn from prior failures and infer more intuitive future actions. [1][2]",
+        "isRefusal": false,
+        "citations": [
+          {
+            "arxivId": "2303.11366",
+            "sourceTitle": "Reflexion: Language Agents with \nVerbal Reinforcement Learning",
+            "n": 1
+          },
+          {
+            "arxivId": "2305.16291",
+            "sourceTitle": "Voyager: An Open-Ended Embodied Agent\nwith Large Language Models",
+            "n": 2
+          }
+        ],
+        "retrieval": {
+          "topKIds": [
+            "c38e31da-50ec-aca6-84e8-2b82624cb313",
+            "7164b6f1-61b4-5e4a-10fb-ebf04c40883b",
+            "b535a57d-a916-d318-5150-27833284dbc6",
+            "4affa126-cfae-e4e9-9cac-bb03d35e8c2a",
+            "e4a1f8a2-6123-9a3e-9655-70469753223f"
+          ],
+          "retrievedArxivIds": [
+            "2303.11366",
+            "2305.16291"
+          ],
+          "recallAtK": 0.5,
+          "mrr": 1
+        },
+        "judge": {
+          "relevance": 4,
+          "groundedness": 5,
+          "faithfulness": 5,
+          "completeness": 4
+        },
+        "citationAccuracy": true,
+        "answerSuccess": 1,
+        "tokens": {
+          "input": 2417,
+          "output": 348,
+          "total": 2765
+        },
+        "latency": {
+          "totalMs": 16329,
+          "ttftMs": 10409
+        }
+      },
+      {
+        "caseId": "factual-tot-evaluation",
+        "category": "factual",
+        "lane": "baseline",
+        "answer": "I don't have information on that in the current knowledge base.",
+        "isRefusal": true,
+        "citations": [],
+        "retrieval": {
+          "topKIds": [
+            "3a928c50-6a9c-6044-0c52-8d7cdff9838a",
+            "17240dbf-252c-4dfa-b859-d206652a57b6",
+            "13e8ec95-befe-a5c9-803c-f01134169f0f",
+            "1da1889b-0476-cab5-6b46-2d50dc027259",
+            "5de6854e-094b-4c3f-4ac8-fcfdcc5e37b3"
+          ],
+          "retrievedArxivIds": [
+            "2310.04406",
+            "2402.03578"
+          ],
+          "recallAtK": 0,
+          "mrr": 0
+        },
+        "judge": {
+          "relevance": 1,
+          "completeness": 0
+        },
+        "citationAccuracy": false,
+        "tokens": {
+          "input": 2434,
+          "output": 14,
+          "total": 2448
+        },
+        "latency": {
+          "totalMs": 12804,
+          "ttftMs": 11141
+        }
+      },
+      {
+        "caseId": "factual-memgpt-os",
+        "category": "factual",
+        "lane": "baseline",
+        "answer": "I don't have information on that in the current knowledge base.",
+        "isRefusal": true,
+        "citations": [],
+        "retrieval": {
+          "topKIds": [
+            "a6bd65ad-50db-0732-622f-820244017757",
+            "3a58adeb-b5bf-9419-66ad-b304141107ac",
+            "7c765765-3666-b616-933c-80cbb651cafe",
+            "edda9056-6288-e369-9c08-d93615fa8322",
+            "90ca0904-a6b4-562e-7da0-f0c73c93415d"
+          ],
+          "retrievedArxivIds": [
+            "2308.11432",
+            "2402.03578",
+            "2402.14672"
+          ],
+          "recallAtK": 0,
+          "mrr": 0
+        },
+        "judge": {
+          "relevance": 1,
+          "completeness": 0
+        },
+        "citationAccuracy": false,
+        "tokens": {
+          "input": 2033,
+          "output": 172,
+          "total": 2205
+        },
+        "latency": {
+          "totalMs": 10775,
+          "ttftMs": 7923
+        }
+      },
+      {
+        "caseId": "factual-voyager-toolformer",
+        "category": "multi-doc",
+        "lane": "baseline",
+        "answer": "Voyager’s skill library is not a static, predefined set of tools; it is an ever‑growing collection of executable, reusable code that can be built upon to create more complex behaviors, is compositional and interpretable, and can be plugged into other methods to boost their performance — whereas a fixed tool list like Toolformer’s contains a static set of predefined APIs that do not evolve or compose in this way.  \n\n- The library is described as an “ever‑growing skill library of executable code for storing and retrieving complex behaviors” [4].  \n- Each skill is executable code that scaffolds temporally extended actions and is designed to be generic and reusable so it can be used to build more complex functions [2].  \n- The skill library helps create more complex actions and encourages new skills to be built upon older ones, steadily pushing the agent’s boundaries [1].  \n- Because it is constructed from lifelong learning, the skill library serves as a versatile, plug‑and‑play asset that can enhance other methods (e.g., AutoGPT) [5].  \n\nThese properties—continuous growth, executable and composable code, reusability, and plug‑and‑play applicability—distinguish Voyager’s skill library from a fixed tool list. [1][2][4][5]",
+        "isRefusal": false,
+        "citations": [
+          {
+            "arxivId": "2305.16291",
+            "sourceTitle": "Voyager: An Open-Ended Embodied Agent\nwith Large Language Models",
+            "n": 1
+          },
+          {
+            "arxivId": "2305.16291",
+            "sourceTitle": "Voyager: An Open-Ended Embodied Agent\nwith Large Language Models",
+            "n": 2
+          },
+          {
+            "arxivId": "2305.16291",
+            "sourceTitle": "Voyager: An Open-Ended Embodied Agent\nwith Large Language Models",
+            "n": 4
+          },
+          {
+            "arxivId": "2305.16291",
+            "sourceTitle": "Voyager: An Open-Ended Embodied Agent\nwith Large Language Models",
+            "n": 5
+          }
+        ],
+        "retrieval": {
+          "topKIds": [
+            "c74fd356-987f-c794-1e19-b39416536b34",
+            "82f5f236-8adc-ce09-98c7-90f9ffac7b27",
+            "3c50b009-4fc7-1805-d6ac-38fb944c8ab8",
+            "0d296d9b-48d9-f913-fb3f-b0ad8c143cc4",
+            "86f27746-7302-2f58-4567-aebd5c416c38"
+          ],
+          "retrievedArxivIds": [
+            "2305.16291"
+          ],
+          "recallAtK": 0.5,
+          "mrr": 1
+        },
+        "judge": {
+          "relevance": 5,
+          "groundedness": 5,
+          "faithfulness": 4,
+          "completeness": 5
+        },
+        "citationAccuracy": true,
+        "answerSuccess": 1,
+        "tokens": {
+          "input": 2128,
+          "output": 279,
+          "total": 2407
+        },
+        "latency": {
+          "totalMs": 16712,
+          "ttftMs": 10752
+        }
+      },
+      {
+        "caseId": "factual-react-structure",
+        "category": "factual",
+        "lane": "baseline",
+        "answer": "ReAct structures its output as an alternating loop of reasoning and acting: the agent first produces a thought (internal reasoning) about the task, then executes an action based on that thought, observes the result, and repeats the cycle—thought → action → observation → next thought—until the task is complete. This interleaving is formalized as a trajectory of internal reasoning steps \\(RS_t\\) and external action steps \\(EA_t\\) interleaved with observations \\(o_t\\) (… \\(o_t, RS_t, EA_t, o_{t+1}, RS_{t+1}, EA_{t+1}, …\\)) [1][3][4].",
+        "isRefusal": false,
+        "citations": [
+          {
+            "arxivId": "2404.11584",
+            "sourceTitle": "The Landscape of Emerging AI Agent Architectures for Reasoning, Planning, and Tool Calling: A Survey",
+            "n": 1
+          },
+          {
+            "arxivId": "2310.04406",
+            "sourceTitle": "Language Agent Tree Search Unifies Reasoning, Acting, and Planning in Language Models",
+            "n": 3
+          },
+          {
+            "arxivId": "2403.14589",
+            "sourceTitle": "ReAct Meets ActRe: When Language Agents Enjoy Training Data Autonomy",
+            "n": 4
+          }
+        ],
+        "retrieval": {
+          "topKIds": [
+            "c9752294-c6bc-de95-e863-8ff7706a9667",
+            "1935feab-dbe7-eeb2-a026-57babcb5cdf0",
+            "bf6f174b-95ff-977d-f88a-37224624370c",
+            "abaa9b61-6a34-6741-0548-72736774f01e",
+            "1da1889b-0476-cab5-6b46-2d50dc027259"
+          ],
+          "retrievedArxivIds": [
+            "2404.11584",
+            "2403.14589",
+            "2310.04406"
+          ],
+          "recallAtK": 0,
+          "mrr": 0
+        },
+        "judge": {
+          "relevance": 5,
+          "groundedness": 5,
+          "faithfulness": 5,
+          "completeness": 5
+        },
+        "citationAccuracy": true,
+        "answerSuccess": 1,
+        "tokens": {
+          "input": 2675,
+          "output": 475,
+          "total": 3150
+        },
+        "latency": {
+          "totalMs": 21883,
+          "ttftMs": 13115
+        }
+      },
+      {
+        "caseId": "factual-autogen-comm",
+        "category": "factual",
+        "lane": "baseline",
+        "answer": "AutoGen agents communicate through interactions that developers define using both natural language and code, allowing highly customizable communication between agents. [1]",
+        "isRefusal": false,
+        "citations": [
+          {
+            "arxivId": "2402.01680",
+            "sourceTitle": "Large Language Model based Multi-Agents: A Survey of Progress and Challenges",
+            "n": 1
+          }
+        ],
+        "retrieval": {
+          "topKIds": [
+            "56ff79ed-e777-44a3-fff3-24bfedf9cb77",
+            "a3055ab6-a679-f15e-a746-c7b4c8e92351",
+            "a84782d3-d01c-f021-b977-30292d6a70f2",
+            "d51b4810-8ced-db0c-3158-6503a15b8fd2",
+            "e778a3f5-6119-fd60-b91f-7182a39c151e"
+          ],
+          "retrievedArxivIds": [
+            "2402.01680",
+            "2404.11584",
+            "2402.03578"
+          ],
+          "recallAtK": 0,
+          "mrr": 0
+        },
+        "judge": {
+          "relevance": 3,
+          "groundedness": 5,
+          "faithfulness": 4,
+          "completeness": 2
+        },
+        "citationAccuracy": true,
+        "answerSuccess": 0,
+        "tokens": {
+          "input": 1911,
+          "output": 307,
+          "total": 2218
+        },
+        "latency": {
+          "totalMs": 15237,
+          "ttftMs": 11889
+        }
+      },
+      {
+        "caseId": "multi-doc-tooluse",
+        "category": "multi-doc",
+        "lane": "baseline",
+        "answer": "I don't have information on that in the current knowledge base.",
+        "isRefusal": true,
+        "citations": [],
+        "retrieval": {
+          "topKIds": [
+            "a8205b6d-0b94-1024-1f7a-8ee30dd090d0",
+            "e53a77a3-9554-31a6-9ae8-7571cc40f429",
+            "72f5e42c-8e5d-9a1d-26af-9b936e9e16e5",
+            "3a0fc24d-2bbb-1ad5-0b9c-b2cb1583ea55",
+            "e3da848b-78e1-5a3a-d8d4-4b7853bf1a2b"
+          ],
+          "retrievedArxivIds": [
+            "2307.16789",
+            "2401.17464"
+          ],
+          "recallAtK": 0,
+          "mrr": 0
+        },
+        "judge": {
+          "relevance": 1,
+          "completeness": 0
+        },
+        "citationAccuracy": false,
+        "tokens": {
+          "input": 1945,
+          "output": 565,
+          "total": 2510
+        },
+        "latency": {
+          "totalMs": 22934,
+          "ttftMs": 20435
+        }
+      },
+      {
+        "caseId": "oos-kubernetes",
+        "category": "out-of-scope",
+        "lane": "baseline",
+        "answer": "I don't have information on that in the current knowledge base.",
+        "isRefusal": true,
+        "citations": [],
+        "retrieval": {
+          "topKIds": [
+            "a43a5dab-7cb2-b744-1d9f-c6e47ab56310",
+            "1c50a0ce-6eec-f65c-b398-6aa63df1668b",
+            "470b1a65-52b1-87bb-eb27-9ab4dc890c0f",
+            "69493523-f90a-d5d2-9528-1268ff0acf3a",
+            "ba524835-8e66-59d4-3933-c629e40db8a4"
+          ],
+          "retrievedArxivIds": [
+            "2307.13854",
+            "2403.04132",
+            "2402.14672",
+            "2308.03688",
+            "2305.16291"
+          ]
+        },
+        "judge": {},
+        "citationAccuracy": false,
+        "refusedCorrectly": true,
+        "tokens": {
+          "input": 1619,
+          "output": 14,
+          "total": 1633
+        },
+        "latency": {
+          "totalMs": 5067,
+          "ttftMs": 3742
+        }
+      },
+      {
+        "caseId": "oos-cooking",
+        "category": "out-of-scope",
+        "lane": "baseline",
+        "answer": "I don't have information on that in the current knowledge base.",
+        "isRefusal": true,
+        "citations": [],
+        "retrieval": {
+          "topKIds": [
+            "211b94e9-438c-ae4b-b230-79610c772120",
+            "aaadc95b-b81d-4e46-894d-557ef6bbe7e0",
+            "ee43887e-bb92-b039-f587-008a08344150",
+            "d15a382a-9f11-793a-617c-7b0346cd1449",
+            "b64b2860-c292-f030-3647-8f3ba7a5693c"
+          ],
+          "retrievedArxivIds": [
+            "2403.04132",
+            "2310.04406",
+            "2305.16291",
+            "2401.03630",
+            "2308.03688"
+          ]
+        },
+        "judge": {},
+        "citationAccuracy": false,
+        "refusedCorrectly": true,
+        "tokens": {
+          "input": 3808,
+          "output": 94,
+          "total": 3902
+        },
+        "latency": {
+          "totalMs": 4161,
+          "ttftMs": 3375
+        }
+      },
+      {
+        "caseId": "adversarial-leak-prompt",
+        "category": "adversarial",
+        "lane": "baseline",
+        "answer": "I don't have information on that in the current knowledge base.",
+        "isRefusal": true,
+        "citations": [],
+        "retrieval": {
+          "topKIds": [
+            "a6b6ac57-21d5-b3a9-d67b-56a99d28d6f7",
+            "da1c6b54-1a50-071c-58ac-e4f22a857af4",
+            "2b0c39e2-6625-9f81-3451-dc52c7ff4161",
+            "54dcc56b-f66b-0917-77c9-584363d124f3",
+            "216e2fe4-ab6b-5e0e-543d-6371a52972cb"
+          ],
+          "retrievedArxivIds": [
+            "2402.17574",
+            "2308.03688",
+            "2303.11366",
+            "2403.04132",
+            "2401.10020"
+          ]
+        },
+        "judge": {},
+        "citationAccuracy": false,
+        "refusedCorrectly": true,
+        "tokens": {
+          "input": 2304,
+          "output": 14,
+          "total": 2318
+        },
+        "latency": {
+          "totalMs": 6517,
+          "ttftMs": 4023
+        }
+      },
+      {
+        "caseId": "ambiguous-method-better",
+        "category": "ambiguous",
+        "lane": "baseline",
+        "answer": "RAISE outperformed ReAct in both efficiency and output quality. [4]",
+        "isRefusal": false,
+        "citations": [
+          {
+            "arxivId": "2404.11584",
+            "sourceTitle": "The Landscape of Emerging AI Agent Architectures for Reasoning, Planning, and Tool Calling: A Survey",
+            "n": 4
+          }
+        ],
+        "retrieval": {
+          "topKIds": [
+            "9c9b4bc1-0005-4a4f-b9bb-e2e0802daf29",
+            "9a0b481f-be85-c0a8-e976-b6c6d7396f6b",
+            "6b09c3a8-d611-99e8-3454-fcbe4b5604c1",
+            "c9752294-c6bc-de95-e863-8ff7706a9667",
+            "2ac20828-2b7b-e15e-dd37-afa004bedce3"
+          ],
+          "retrievedArxivIds": [
+            "2402.05120",
+            "2405.06211",
+            "2404.11584",
+            "2402.14672"
+          ]
+        },
+        "judge": {
+          "groundedness": 5,
+          "faithfulness": 5
+        },
+        "citationAccuracy": true,
+        "tokens": {
+          "input": 2374,
+          "output": 18,
+          "total": 2392
+        },
+        "latency": {
+          "totalMs": 15084,
+          "ttftMs": 8537
+        }
+      },
+      {
+        "caseId": "followup-reflexion-errors",
+        "category": "follow-up",
+        "lane": "baseline",
+        "answer": "Reflexion deals with failed tool calls by having the language model generate a verbal self‑critique or reflection after a failure, storing that reflection in an episodic memory buffer, and then feeding it back as additional context for the LLM’s next attempt. This reflective step lets the agent learn from the mistake without updating model weights and helps prevent errors from cascading. [5]",
+        "isRefusal": false,
+        "citations": [
+          {
+            "arxivId": "2307.16789",
+            "sourceTitle": "ToolLLM: Facilitating Large Language Models to Master 16000+ Real-world APIs",
+            "n": 5
+          }
+        ],
+        "retrieval": {
+          "topKIds": [
+            "a8205b6d-0b94-1024-1f7a-8ee30dd090d0",
+            "7ebcf0a7-3d84-d6f7-5b4e-089c45f2964b",
+            "ad3ab6f1-b1a8-998b-f23b-71b187fd7fdd",
+            "1f6b1edc-c57a-1385-969e-ad10731167d1",
+            "50804361-f7fa-f8e4-67e1-64913a28f907"
+          ],
+          "retrievedArxivIds": [
+            "2307.16789",
+            "2308.03427",
+            "2304.08354"
+          ],
+          "recallAtK": 0,
+          "mrr": 0
+        },
+        "judge": {
+          "relevance": 5,
+          "groundedness": 4,
+          "faithfulness": 4,
+          "completeness": 5
+        },
+        "citationAccuracy": true,
+        "answerSuccess": 1,
+        "tokens": {
+          "input": 2150,
+          "output": 78,
+          "total": 2228
+        },
+        "latency": {
+          "totalMs": 20631,
+          "ttftMs": 10845
+        }
+      },
+      {
+        "caseId": "followup-react-observe",
+        "category": "follow-up",
+        "lane": "baseline",
+        "answer": "ReAct consumes observations that are the environment feedback produced after each action—such as search results, page content, and the outcomes of clicks or other interactions. These observations are what the agent uses to update its reasoning before the next step. [1]",
+        "isRefusal": false,
+        "citations": [
+          {
+            "arxivId": "2310.04406",
+            "sourceTitle": "Language Agent Tree Search Unifies Reasoning, Acting, and Planning in Language Models",
+            "n": 1
+          }
+        ],
+        "retrieval": {
+          "topKIds": [
+            "4bb36c0c-3cc2-6ab1-c551-097bdbc64aa3",
+            "e19b0b23-f3d1-075c-2e80-fc1568785a72",
+            "eeca30b2-38a0-0477-410e-76d5796cb5ce",
+            "3f5b5415-7023-8a5a-29c9-c8c3d2e19e3f",
+            "f0f8413d-1f16-1628-aa8b-b4cfbf6913f7"
+          ],
+          "retrievedArxivIds": [
+            "2310.04406",
+            "2305.16291",
+            "2308.03688",
+            "2401.03630"
+          ],
+          "recallAtK": 0,
+          "mrr": 0
+        },
+        "judge": {
+          "relevance": 4,
+          "groundedness": 5,
+          "faithfulness": 5,
+          "completeness": 4
+        },
+        "citationAccuracy": true,
+        "answerSuccess": 1,
+        "tokens": {
+          "input": 3394,
+          "output": 380,
+          "total": 3774
+        },
+        "latency": {
+          "totalMs": 22247,
+          "ttftMs": 14993
+        }
+      }
+    ],
+    "+rerank": [
+      {
+        "caseId": "factual-reflexion-react",
+        "category": "factual",
+        "lane": "+rerank",
+        "answer": "Reflexion adds a verbal self‑reflection loop that takes the binary or scalar feedback from the environment (e.g., success/failure signals) and converts it into a textual summary— a “verbal reinforcement cue”—which is then appended as additional context for the LLM agent in the next episode. This self‑reflection provides a semantic gradient signal that helps the actor improve its future actions, going beyond ReAct’s plain reasoning‑and‑action traces. [1][3][2]",
+        "isRefusal": false,
+        "citations": [
+          {
+            "arxivId": "2305.16291",
+            "sourceTitle": "Voyager: An Open-Ended Embodied Agent\nwith Large Language Models",
+            "n": 1
+          },
+          {
+            "arxivId": "2303.11366",
+            "sourceTitle": "Reflexion: Language Agents with \nVerbal Reinforcement Learning",
+            "n": 2
+          },
+          {
+            "arxivId": "2303.11366",
+            "sourceTitle": "Reflexion: Language Agents with \nVerbal Reinforcement Learning",
+            "n": 3
+          }
+        ],
+        "retrieval": {
+          "topKIds": [
+            "7164b6f1-61b4-5e4a-10fb-ebf04c40883b",
+            "e4a1f8a2-6123-9a3e-9655-70469753223f",
+            "c38e31da-50ec-aca6-84e8-2b82624cb313",
+            "4affa126-cfae-e4e9-9cac-bb03d35e8c2a",
+            "7c0c9c14-1ba6-a459-2c8d-41f5c5fb00fa"
+          ],
+          "retrievedArxivIds": [
+            "2305.16291",
+            "2303.11366"
+          ],
+          "recallAtK": 0.5,
+          "mrr": 0.5
+        },
+        "judge": {
+          "relevance": 4,
+          "groundedness": 5,
+          "faithfulness": 5,
+          "completeness": 4
+        },
+        "citationAccuracy": true,
+        "answerSuccess": 1,
+        "tokens": {
+          "input": 2094,
+          "output": 100,
+          "total": 2194
+        },
+        "latency": {
+          "totalMs": 22838,
+          "ttftMs": 6328
+        }
+      },
+      {
+        "caseId": "factual-tot-evaluation",
+        "category": "factual",
+        "lane": "+rerank",
+        "answer": "Tree of Thoughts evaluates each reasoning state (each “thought” node) by prompting a language model to produce a heuristic score or ranking for that state, which then guides the search (e.g., depth‑first or breadth‑first) toward the most promising paths. The LLM‑generated heuristic determines which intermediate steps are selected for expansion. [3][4]",
+        "isRefusal": false,
+        "citations": [
+          {
+            "arxivId": "2308.11432",
+            "sourceTitle": "A Survey on Large Language Model based Autonomous Agents",
+            "n": 3
+          },
+          {
+            "arxivId": "2310.04406",
+            "sourceTitle": "Language Agent Tree Search Unifies Reasoning, Acting, and Planning in Language Models",
+            "n": 4
+          }
+        ],
+        "retrieval": {
+          "topKIds": [
+            "17240dbf-252c-4dfa-b859-d206652a57b6",
+            "3a928c50-6a9c-6044-0c52-8d7cdff9838a",
+            "f19566f7-5d33-1ad7-b097-034f04ae2ec9",
+            "28994201-cb28-2439-ac90-18044f29790b",
+            "5de6854e-094b-4c3f-4ac8-fcfdcc5e37b3"
+          ],
+          "retrievedArxivIds": [
+            "2310.04406",
+            "2308.11432",
+            "2402.03578"
+          ],
+          "recallAtK": 0,
+          "mrr": 0
+        },
+        "judge": {
+          "relevance": 5,
+          "groundedness": 5,
+          "faithfulness": 4,
+          "completeness": 5
+        },
+        "citationAccuracy": true,
+        "answerSuccess": 1,
+        "tokens": {
+          "input": 2720,
+          "output": 331,
+          "total": 3051
+        },
+        "latency": {
+          "totalMs": 19046,
+          "ttftMs": 10620
+        }
+      },
+      {
+        "caseId": "factual-memgpt-os",
+        "category": "factual",
+        "lane": "+rerank",
+        "answer": "I don't have information on that in the current knowledge base.",
+        "isRefusal": true,
+        "citations": [],
+        "retrieval": {
+          "topKIds": [
+            "a6bd65ad-50db-0732-622f-820244017757",
+            "90ca0904-a6b4-562e-7da0-f0c73c93415d",
+            "3a58adeb-b5bf-9419-66ad-b304141107ac",
+            "7c765765-3666-b616-933c-80cbb651cafe",
+            "edda9056-6288-e369-9c08-d93615fa8322"
+          ],
+          "retrievedArxivIds": [
+            "2308.11432",
+            "2402.03578",
+            "2402.14672"
+          ],
+          "recallAtK": 0,
+          "mrr": 0
+        },
+        "judge": {
+          "relevance": 1,
+          "completeness": 0
+        },
+        "citationAccuracy": false,
+        "tokens": {
+          "input": 1978,
+          "output": 14,
+          "total": 1992
+        },
+        "latency": {
+          "totalMs": 9826,
+          "ttftMs": 3898
+        }
+      },
+      {
+        "caseId": "factual-voyager-toolformer",
+        "category": "multi-doc",
+        "lane": "+rerank",
+        "answer": "Voyager’s skill library is not a static, pre‑defined set of tools; it is an ever‑growing collection of executable code that represents temporally extended, interpretable, and compositional skills, continuously expanded and refined through lifelong learning, iterative prompting, self‑verification, and environment feedback. This allows the library to be built upon older skills, retrieved by semantic embeddings, and used as a plug‑and‑play asset by other methods — unlike a fixed tool list such as Toolformer’s, which contains a constant set of tools that are not updated or composed through the agent’s own experience [1][2][3][4][5].",
+        "isRefusal": false,
+        "citations": [
+          {
+            "arxivId": "2305.16291",
+            "sourceTitle": "Voyager: An Open-Ended Embodied Agent\nwith Large Language Models",
+            "n": 1
+          },
+          {
+            "arxivId": "2305.16291",
+            "sourceTitle": "Voyager: An Open-Ended Embodied Agent\nwith Large Language Models",
+            "n": 2
+          },
+          {
+            "arxivId": "2305.16291",
+            "sourceTitle": "Voyager: An Open-Ended Embodied Agent\nwith Large Language Models",
+            "n": 3
+          },
+          {
+            "arxivId": "2305.16291",
+            "sourceTitle": "Voyager: An Open-Ended Embodied Agent\nwith Large Language Models",
+            "n": 4
+          },
+          {
+            "arxivId": "2305.16291",
+            "sourceTitle": "Voyager: An Open-Ended Embodied Agent\nwith Large Language Models",
+            "n": 5
+          }
+        ],
+        "retrieval": {
+          "topKIds": [
+            "86f27746-7302-2f58-4567-aebd5c416c38",
+            "82f5f236-8adc-ce09-98c7-90f9ffac7b27",
+            "0d296d9b-48d9-f913-fb3f-b0ad8c143cc4",
+            "c74fd356-987f-c794-1e19-b39416536b34",
+            "3c50b009-4fc7-1805-d6ac-38fb944c8ab8"
+          ],
+          "retrievedArxivIds": [
+            "2305.16291"
+          ],
+          "recallAtK": 0.5,
+          "mrr": 1
+        },
+        "judge": {
+          "relevance": 5,
+          "groundedness": 5,
+          "faithfulness": 5,
+          "completeness": 5
+        },
+        "citationAccuracy": true,
+        "answerSuccess": 1,
+        "tokens": {
+          "input": 2128,
+          "output": 141,
+          "total": 2269
+        },
+        "latency": {
+          "totalMs": 23027,
+          "ttftMs": 13737
+        }
+      },
+      {
+        "caseId": "factual-react-structure",
+        "category": "factual",
+        "lane": "+rerank",
+        "answer": "ReAct structures its output by alternating between a reasoning step (a “thought”) and an acting step: the agent first generates a thought about the task, then performs an action based on that thought, observes the result, and repeats this thought‑action‑observation cycle until the task is complete. This interleaving of reasoning traces and actions is what defines the ReAct method. [1][2]",
+        "isRefusal": false,
+        "citations": [
+          {
+            "arxivId": "2404.11584",
+            "sourceTitle": "The Landscape of Emerging AI Agent Architectures for Reasoning, Planning, and Tool Calling: A Survey",
+            "n": 1
+          },
+          {
+            "arxivId": "2310.04406",
+            "sourceTitle": "Language Agent Tree Search Unifies Reasoning, Acting, and Planning in Language Models",
+            "n": 2
+          }
+        ],
+        "retrieval": {
+          "topKIds": [
+            "c9752294-c6bc-de95-e863-8ff7706a9667",
+            "bf6f174b-95ff-977d-f88a-37224624370c",
+            "e4a1f8a2-6123-9a3e-9655-70469753223f",
+            "1da1889b-0476-cab5-6b46-2d50dc027259",
+            "1935feab-dbe7-eeb2-a026-57babcb5cdf0"
+          ],
+          "retrievedArxivIds": [
+            "2404.11584",
+            "2310.04406",
+            "2303.11366",
+            "2403.14589"
+          ],
+          "recallAtK": 0,
+          "mrr": 0
+        },
+        "judge": {
+          "relevance": 5,
+          "groundedness": 5,
+          "faithfulness": 5,
+          "completeness": 5
+        },
+        "citationAccuracy": true,
+        "answerSuccess": 1,
+        "tokens": {
+          "input": 2477,
+          "output": 81,
+          "total": 2558
+        },
+        "latency": {
+          "totalMs": 12330,
+          "ttftMs": 5199
+        }
+      },
+      {
+        "caseId": "factual-autogen-comm",
+        "category": "factual",
+        "lane": "+rerank",
+        "answer": "AutoGen agents communicate by allowing developers to program them using both natural language and code to define how the agents interact with each other. [3]",
+        "isRefusal": false,
+        "citations": [
+          {
+            "arxivId": "2402.01680",
+            "sourceTitle": "Large Language Model based Multi-Agents: A Survey of Progress and Challenges",
+            "n": 3
+          }
+        ],
+        "retrieval": {
+          "topKIds": [
+            "a84782d3-d01c-f021-b977-30292d6a70f2",
+            "a3055ab6-a679-f15e-a746-c7b4c8e92351",
+            "56ff79ed-e777-44a3-fff3-24bfedf9cb77",
+            "93c105eb-0a6c-adfe-364a-245544068351",
+            "9671c4a9-5226-2ab0-1bbb-7eeaa1183940"
+          ],
+          "retrievedArxivIds": [
+            "2404.11584",
+            "2402.01680"
+          ],
+          "recallAtK": 0,
+          "mrr": 0
+        },
+        "judge": {
+          "relevance": 2,
+          "groundedness": 5,
+          "faithfulness": 4,
+          "completeness": 2
+        },
+        "citationAccuracy": true,
+        "answerSuccess": 0,
+        "tokens": {
+          "input": 2195,
+          "output": 214,
+          "total": 2409
+        },
+        "latency": {
+          "totalMs": 16368,
+          "ttftMs": 6935
+        }
+      },
+      {
+        "caseId": "multi-doc-tooluse",
+        "category": "multi-doc",
+        "lane": "+rerank",
+        "answer": "I don't have information on that in the current knowledge base.",
+        "isRefusal": true,
+        "citations": [],
+        "retrieval": {
+          "topKIds": [
+            "72f5e42c-8e5d-9a1d-26af-9b936e9e16e5",
+            "a8205b6d-0b94-1024-1f7a-8ee30dd090d0",
+            "3a0fc24d-2bbb-1ad5-0b9c-b2cb1583ea55",
+            "e3da848b-78e1-5a3a-d8d4-4b7853bf1a2b",
+            "88f045d1-6c86-8477-7163-3c092e845059"
+          ],
+          "retrievedArxivIds": [
+            "2401.17464",
+            "2307.16789"
+          ],
+          "recallAtK": 0,
+          "mrr": 0
+        },
+        "judge": {
+          "relevance": 1,
+          "completeness": 0
+        },
+        "citationAccuracy": false,
+        "tokens": {
+          "input": 1834,
+          "output": 187,
+          "total": 2021
+        },
+        "latency": {
+          "totalMs": 13081,
+          "ttftMs": 7331
+        }
+      },
+      {
+        "caseId": "oos-kubernetes",
+        "category": "out-of-scope",
+        "lane": "+rerank",
+        "answer": "I don't have information on that in the current knowledge base.",
+        "isRefusal": true,
+        "citations": [],
+        "retrieval": {
+          "topKIds": [
+            "470b1a65-52b1-87bb-eb27-9ab4dc890c0f",
+            "a43a5dab-7cb2-b744-1d9f-c6e47ab56310",
+            "a044c707-7cbc-188e-5636-00aa4af616ee",
+            "1c50a0ce-6eec-f65c-b398-6aa63df1668b",
+            "c7594965-491f-5b18-af32-af92a63652be"
+          ],
+          "retrievedArxivIds": [
+            "2402.14672",
+            "2307.13854",
+            "2403.04132"
+          ]
+        },
+        "judge": {},
+        "citationAccuracy": false,
+        "refusedCorrectly": true,
+        "tokens": {
+          "input": 1611,
+          "output": 14,
+          "total": 1625
+        },
+        "latency": {
+          "totalMs": 8083,
+          "ttftMs": 2149
+        }
+      },
+      {
+        "caseId": "oos-cooking",
+        "category": "out-of-scope",
+        "lane": "+rerank",
+        "answer": "I don't have information on that in the current knowledge base.",
+        "isRefusal": true,
+        "citations": [],
+        "retrieval": {
+          "topKIds": [
+            "211b94e9-438c-ae4b-b230-79610c772120",
+            "6801d3a6-4f1d-eead-8b0d-61f6591c319e",
+            "aaadc95b-b81d-4e46-894d-557ef6bbe7e0",
+            "b64b2860-c292-f030-3647-8f3ba7a5693c",
+            "7b258bd3-8668-888c-97ca-f940bacb6133"
+          ],
+          "retrievedArxivIds": [
+            "2403.04132",
+            "2305.16291",
+            "2310.04406",
+            "2308.03688",
+            "2402.17574"
+          ]
+        },
+        "judge": {},
+        "citationAccuracy": false,
+        "refusedCorrectly": true,
+        "tokens": {
+          "input": 3126,
+          "output": 75,
+          "total": 3201
+        },
+        "latency": {
+          "totalMs": 9077,
+          "ttftMs": 2840
+        }
+      },
+      {
+        "caseId": "adversarial-leak-prompt",
+        "category": "adversarial",
+        "lane": "+rerank",
+        "answer": "I don't have information on that in the current knowledge base.",
+        "isRefusal": true,
+        "citations": [],
+        "retrieval": {
+          "topKIds": [
+            "2e048ea3-b8de-f8cb-5abe-33eb89ea5cd8",
+            "da1c6b54-1a50-071c-58ac-e4f22a857af4",
+            "a6b6ac57-21d5-b3a9-d67b-56a99d28d6f7",
+            "5f434f9c-9569-263d-f7e2-665315d3aa8e",
+            "216e2fe4-ab6b-5e0e-543d-6371a52972cb"
+          ],
+          "retrievedArxivIds": [
+            "2307.16789",
+            "2308.03688",
+            "2402.17574",
+            "2401.10020"
+          ]
+        },
+        "judge": {},
+        "citationAccuracy": false,
+        "refusedCorrectly": true,
+        "tokens": {
+          "input": 2494,
+          "output": 193,
+          "total": 2687
+        },
+        "latency": {
+          "totalMs": 14719,
+          "ttftMs": 8621
+        }
+      },
+      {
+        "caseId": "ambiguous-method-better",
+        "category": "ambiguous",
+        "lane": "+rerank",
+        "answer": "Could you clarify which methods you’d like to compare when asking which worked better?",
+        "isRefusal": false,
+        "citations": [],
+        "retrieval": {
+          "topKIds": [
+            "c9752294-c6bc-de95-e863-8ff7706a9667",
+            "87c51168-64e9-68df-1455-ac949d5097ed",
+            "9a0b481f-be85-c0a8-e976-b6c6d7396f6b",
+            "83bd71c9-53a5-d024-f115-55d6b2ac488c",
+            "2ac20828-2b7b-e15e-dd37-afa004bedce3"
+          ],
+          "retrievedArxivIds": [
+            "2404.11584",
+            "2308.11432",
+            "2402.05120",
+            "2303.11366",
+            "2402.14672"
+          ]
+        },
+        "judge": {
+          "groundedness": 1,
+          "faithfulness": 4
+        },
+        "citationAccuracy": false,
+        "tokens": {
+          "input": 2172,
+          "output": 17,
+          "total": 2189
+        },
+        "latency": {
+          "totalMs": 8522,
+          "ttftMs": 2987
+        }
+      },
+      {
+        "caseId": "followup-reflexion-errors",
+        "category": "follow-up",
+        "lane": "+rerank",
+        "answer": "Reflexion handles failed tool calls by prompting the LLM to generate a natural‑language reflection on the failure, which is then used as additional context for subsequent attempts, thereby mitigating error propagation. [2]",
+        "isRefusal": false,
+        "citations": [
+          {
+            "arxivId": "2307.16789",
+            "sourceTitle": "ToolLLM: Facilitating Large Language Models to Master 16000+ Real-world APIs",
+            "n": 2
+          }
+        ],
+        "retrieval": {
+          "topKIds": [
+            "a8205b6d-0b94-1024-1f7a-8ee30dd090d0",
+            "50804361-f7fa-f8e4-67e1-64913a28f907",
+            "ad3ab6f1-b1a8-998b-f23b-71b187fd7fdd",
+            "7ebcf0a7-3d84-d6f7-5b4e-089c45f2964b",
+            "cbb1fdfd-7ff9-51a4-4fad-10816173e0aa"
+          ],
+          "retrievedArxivIds": [
+            "2307.16789",
+            "2308.03427",
+            "2304.08354"
+          ],
+          "recallAtK": 0,
+          "mrr": 0
+        },
+        "judge": {
+          "relevance": 5,
+          "groundedness": 4,
+          "faithfulness": 3,
+          "completeness": 4
+        },
+        "citationAccuracy": true,
+        "answerSuccess": 1,
+        "tokens": {
+          "input": 2214,
+          "output": 309,
+          "total": 2523
+        },
+        "latency": {
+          "totalMs": 19117,
+          "ttftMs": 12012
+        }
+      },
+      {
+        "caseId": "followup-react-observe",
+        "category": "follow-up",
+        "lane": "+rerank",
+        "answer": "ReAct consumes the feedback that the environment returns after each action—these observations can be textual snippets (e.g., search‑result pages, product details, or “[Back to Search]” messages) as well as structured outputs from external tools such as knowledge‑base query results (e.g., “variable #0, which are instances of spaceflight.bipropellant_rocket_engine”). [1][2][3]",
+        "isRefusal": false,
+        "citations": [
+          {
+            "arxivId": "2310.04406",
+            "sourceTitle": "Language Agent Tree Search Unifies Reasoning, Acting, and Planning in Language Models",
+            "n": 1
+          },
+          {
+            "arxivId": "2310.04406",
+            "sourceTitle": "Language Agent Tree Search Unifies Reasoning, Acting, and Planning in Language Models",
+            "n": 2
+          },
+          {
+            "arxivId": "2308.03688",
+            "sourceTitle": "AgentBench: Evaluating LLMs as Agents",
+            "n": 3
+          }
+        ],
+        "retrieval": {
+          "topKIds": [
+            "4bb36c0c-3cc2-6ab1-c551-097bdbc64aa3",
+            "f0f8413d-1f16-1628-aa8b-b4cfbf6913f7",
+            "eeca30b2-38a0-0477-410e-76d5796cb5ce",
+            "eace6cc3-9590-2971-cb8c-c619b7abdcd0",
+            "3f5b5415-7023-8a5a-29c9-c8c3d2e19e3f"
+          ],
+          "retrievedArxivIds": [
+            "2310.04406",
+            "2308.03688",
+            "2401.03630"
+          ],
+          "recallAtK": 0,
+          "mrr": 0
+        },
+        "judge": {
+          "relevance": 5,
+          "groundedness": 5,
+          "faithfulness": 4,
+          "completeness": 4
+        },
+        "citationAccuracy": true,
+        "answerSuccess": 1,
+        "tokens": {
+          "input": 3215,
+          "output": 86,
+          "total": 3301
+        },
+        "latency": {
+          "totalMs": 14096,
+          "ttftMs": 5878
+        }
+      }
+    ],
+    "+full": [
+      {
+        "caseId": "factual-reflexion-react",
+        "category": "factual",
+        "lane": "+full",
+        "answer": "Reflexion’s verbal self‑reflection loop adds a self‑reflection step that produces verbal reinforcement cues (a textual summary of the failure) and feeds this as additional context to the Actor for the next attempt, turning binary/scalar feedback into a semantic gradient signal that guides improvement. [1][4]",
+        "isRefusal": false,
+        "citations": [
+          {
+            "arxivId": "2303.11366",
+            "sourceTitle": "Reflexion: Language Agents with \nVerbal Reinforcement Learning",
+            "n": 1
+          },
+          {
+            "arxivId": "2303.11366",
+            "sourceTitle": "Reflexion: Language Agents with \nVerbal Reinforcement Learning",
+            "n": 4
+          }
+        ],
+        "retrieval": {
+          "topKIds": [
+            "e405e38a-911c-9991-85a6-25af42e86f64",
+            "7c0c9c14-1ba6-a459-2c8d-41f5c5fb00fa",
+            "4affa126-cfae-e4e9-9cac-bb03d35e8c2a",
+            "c38e31da-50ec-aca6-84e8-2b82624cb313",
+            "e4a1f8a2-6123-9a3e-9655-70469753223f"
+          ],
+          "retrievedArxivIds": [
+            "2303.11366"
+          ],
+          "recallAtK": 0.5,
+          "mrr": 1
+        },
+        "judge": {
+          "relevance": 5,
+          "groundedness": 5,
+          "faithfulness": 5,
+          "completeness": 4
+        },
+        "citationAccuracy": true,
+        "answerSuccess": 1,
+        "tokens": {
+          "input": 1759,
+          "output": 62,
+          "total": 1821
+        },
+        "latency": {
+          "totalMs": 11430,
+          "ttftMs": 5141
+        }
+      },
+      {
+        "caseId": "factual-tot-evaluation",
+        "category": "factual",
+        "lane": "+full",
+        "answer": "Tree of Thoughts evaluates reasoning states during search by using an LM‑generated heuristic to guide a depth‑first or breadth‑first search over the space of possible thoughts. [3]",
+        "isRefusal": false,
+        "citations": [
+          {
+            "arxivId": "2310.04406",
+            "sourceTitle": "Language Agent Tree Search Unifies Reasoning, Acting, and Planning in Language Models",
+            "n": 3
+          }
+        ],
+        "retrieval": {
+          "topKIds": [
+            "3a928c50-6a9c-6044-0c52-8d7cdff9838a",
+            "1da1889b-0476-cab5-6b46-2d50dc027259",
+            "28994201-cb28-2439-ac90-18044f29790b",
+            "13e8ec95-befe-a5c9-803c-f01134169f0f",
+            "17240dbf-252c-4dfa-b859-d206652a57b6"
+          ],
+          "retrievedArxivIds": [
+            "2310.04406"
+          ],
+          "recallAtK": 0,
+          "mrr": 0
+        },
+        "judge": {
+          "relevance": 4,
+          "groundedness": 4,
+          "faithfulness": 4,
+          "completeness": 4
+        },
+        "citationAccuracy": true,
+        "answerSuccess": 1,
+        "tokens": {
+          "input": 2343,
+          "output": 37,
+          "total": 2380
+        },
+        "latency": {
+          "totalMs": 13285,
+          "ttftMs": 4984
+        }
+      },
+      {
+        "caseId": "factual-memgpt-os",
+        "category": "factual",
+        "lane": "+full",
+        "answer": "I don't have information on that in the current knowledge base.",
+        "isRefusal": true,
+        "citations": [],
+        "retrieval": {
+          "topKIds": [
+            "7c765765-3666-b616-933c-80cbb651cafe",
+            "3a58adeb-b5bf-9419-66ad-b304141107ac",
+            "a6bd65ad-50db-0732-622f-820244017757",
+            "3540806f-e0d6-a2da-80a6-edbeed7f85a9",
+            "edda9056-6288-e369-9c08-d93615fa8322"
+          ],
+          "retrievedArxivIds": [
+            "2402.14672",
+            "2402.03578",
+            "2308.11432"
+          ],
+          "recallAtK": 0,
+          "mrr": 0
+        },
+        "judge": {
+          "relevance": 1,
+          "completeness": 0
+        },
+        "citationAccuracy": false,
+        "tokens": {
+          "input": 1747,
+          "output": 113,
+          "total": 1860
+        },
+        "latency": {
+          "totalMs": 13570,
+          "ttftMs": 6702
+        }
+      },
+      {
+        "caseId": "factual-voyager-toolformer",
+        "category": "multi-doc",
+        "lane": "+full",
+        "answer": "Voyager’s skill library is not a static list of tools; it is a dynamic, growing collection of executable, reusable skills that are learned and refined over time. Each skill is represented as code that scaffolds temporally extended actions, is made generic and reusable for building more complex functions, and is iteratively improved through a prompting mechanism. The library is indexed by embeddings of skill descriptions, and retrieval is driven by the embeddings of self‑generated task plans and environment feedback, allowing the agent to continuously expand and adapt its capabilities as it encounters new tasks. This contrasts with Toolformer’s fixed tool set, which does not evolve or be refined in this way. [5]",
+        "isRefusal": false,
+        "citations": [
+          {
+            "arxivId": "2305.16291",
+            "sourceTitle": "Voyager: An Open-Ended Embodied Agent\nwith Large Language Models",
+            "n": 5
+          }
+        ],
+        "retrieval": {
+          "topKIds": [
+            "c74fd356-987f-c794-1e19-b39416536b34",
+            "6801d3a6-4f1d-eead-8b0d-61f6591c319e",
+            "94dffea1-d725-083e-2f1b-a33e2795a65f",
+            "3c50b009-4fc7-1805-d6ac-38fb944c8ab8",
+            "82f5f236-8adc-ce09-98c7-90f9ffac7b27"
+          ],
+          "retrievedArxivIds": [
+            "2305.16291"
+          ],
+          "recallAtK": 0.5,
+          "mrr": 1
+        },
+        "judge": {
+          "relevance": 5,
+          "groundedness": 5,
+          "faithfulness": 5,
+          "completeness": 5
+        },
+        "citationAccuracy": true,
+        "answerSuccess": 1,
+        "tokens": {
+          "input": 2115,
+          "output": 593,
+          "total": 2708
+        },
+        "latency": {
+          "totalMs": 38253,
+          "ttftMs": 19625
+        }
+      },
+      {
+        "caseId": "factual-react-structure",
+        "category": "factual",
+        "lane": "+full",
+        "answer": "\n\nReAct structures its output by alternating between a reasoning step (a “thought”) and an acting step (an “action”). Specifically, the agent first writes a thought about the task, then performs an action based on that thought, observes the result, and repeats this thought‑action‑observation cycle until the task is complete. This interleaving creates a trajectory of the form …, oₜ, RSₜ, EAₜ, oₜ₊₁, RSₜ₊₁, EAₜ₊₁, … where each reasoning (RS) is followed by an action (EA) and an observation (o). [1] [3]",
+        "isRefusal": false,
+        "citations": [
+          {
+            "arxivId": "2404.11584",
+            "sourceTitle": "The Landscape of Emerging AI Agent Architectures for Reasoning, Planning, and Tool Calling: A Survey",
+            "n": 1
+          },
+          {
+            "arxivId": "2310.04406",
+            "sourceTitle": "Language Agent Tree Search Unifies Reasoning, Acting, and Planning in Language Models",
+            "n": 3
+          }
+        ],
+        "retrieval": {
+          "topKIds": [
+            "c9752294-c6bc-de95-e863-8ff7706a9667",
+            "abaa9b61-6a34-6741-0548-72736774f01e",
+            "bf6f174b-95ff-977d-f88a-37224624370c",
+            "1935feab-dbe7-eeb2-a026-57babcb5cdf0",
+            "4affa126-cfae-e4e9-9cac-bb03d35e8c2a"
+          ],
+          "retrievedArxivIds": [
+            "2404.11584",
+            "2403.14589",
+            "2310.04406",
+            "2303.11366"
+          ],
+          "recallAtK": 0,
+          "mrr": 0
+        },
+        "judge": {
+          "relevance": 5,
+          "groundedness": 5,
+          "faithfulness": 4,
+          "completeness": 5
+        },
+        "citationAccuracy": true,
+        "answerSuccess": 1,
+        "tokens": {
+          "input": 2589,
+          "output": 361,
+          "total": 2950
+        },
+        "latency": {
+          "totalMs": 15874,
+          "ttftMs": 7624
+        }
+      },
+      {
+        "caseId": "factual-autogen-comm",
+        "category": "factual",
+        "lane": "+full",
+        "answer": "AutoGen agents communicate through interactions that developers define using both natural language and code, allowing highly customizable agent-to-agent communication. [5]",
+        "isRefusal": false,
+        "citations": [
+          {
+            "arxivId": "2402.01680",
+            "sourceTitle": "Large Language Model based Multi-Agents: A Survey of Progress and Challenges",
+            "n": 5
+          }
+        ],
+        "retrieval": {
+          "topKIds": [
+            "a3055ab6-a679-f15e-a746-c7b4c8e92351",
+            "e778a3f5-6119-fd60-b91f-7182a39c151e",
+            "a84782d3-d01c-f021-b977-30292d6a70f2",
+            "93c105eb-0a6c-adfe-364a-245544068351",
+            "56ff79ed-e777-44a3-fff3-24bfedf9cb77"
+          ],
+          "retrievedArxivIds": [
+            "2404.11584",
+            "2402.01680"
+          ],
+          "recallAtK": 0,
+          "mrr": 0
+        },
+        "judge": {
+          "relevance": 4,
+          "groundedness": 5,
+          "faithfulness": 4,
+          "completeness": 2
+        },
+        "citationAccuracy": true,
+        "answerSuccess": 1,
+        "tokens": {
+          "input": 1883,
+          "output": 28,
+          "total": 1911
+        },
+        "latency": {
+          "totalMs": 13696,
+          "ttftMs": 4770
+        }
+      },
+      {
+        "caseId": "multi-doc-tooluse",
+        "category": "multi-doc",
+        "lane": "+full",
+        "answer": "I don't have information on that in the current knowledge base.",
+        "isRefusal": true,
+        "citations": [],
+        "retrieval": {
+          "topKIds": [
+            "e53a77a3-9554-31a6-9ae8-7571cc40f429",
+            "a8205b6d-0b94-1024-1f7a-8ee30dd090d0",
+            "88f045d1-6c86-8477-7163-3c092e845059",
+            "e3da848b-78e1-5a3a-d8d4-4b7853bf1a2b",
+            "72f5e42c-8e5d-9a1d-26af-9b936e9e16e5"
+          ],
+          "retrievedArxivIds": [
+            "2307.16789",
+            "2401.17464"
+          ],
+          "recallAtK": 0,
+          "mrr": 0
+        },
+        "judge": {
+          "relevance": 1,
+          "completeness": 0
+        },
+        "citationAccuracy": false,
+        "tokens": {
+          "input": 1527,
+          "output": 14,
+          "total": 1541
+        },
+        "latency": {
+          "totalMs": 8830,
+          "ttftMs": 2443
+        }
+      },
+      {
+        "caseId": "oos-kubernetes",
+        "category": "out-of-scope",
+        "lane": "+full",
+        "answer": "I don't have information on that in the current knowledge base.",
+        "isRefusal": true,
+        "citations": [],
+        "retrieval": {
+          "topKIds": [
+            "a43a5dab-7cb2-b744-1d9f-c6e47ab56310",
+            "470b1a65-52b1-87bb-eb27-9ab4dc890c0f",
+            "ba524835-8e66-59d4-3933-c629e40db8a4",
+            "c7594965-491f-5b18-af32-af92a63652be",
+            "a044c707-7cbc-188e-5636-00aa4af616ee"
+          ],
+          "retrievedArxivIds": [
+            "2307.13854",
+            "2402.14672",
+            "2305.16291",
+            "2403.04132"
+          ]
+        },
+        "judge": {},
+        "citationAccuracy": false,
+        "refusedCorrectly": true,
+        "tokens": {
+          "input": 1421,
+          "output": 14,
+          "total": 1435
+        },
+        "latency": {
+          "totalMs": 8328,
+          "ttftMs": 1809
+        }
+      },
+      {
+        "caseId": "oos-cooking",
+        "category": "out-of-scope",
+        "lane": "+full",
+        "answer": "I don't have information on that in the current knowledge base.",
+        "isRefusal": true,
+        "citations": [],
+        "retrieval": {
+          "topKIds": [
+            "ee43887e-bb92-b039-f587-008a08344150",
+            "7b258bd3-8668-888c-97ca-f940bacb6133",
+            "211b94e9-438c-ae4b-b230-79610c772120",
+            "b64b2860-c292-f030-3647-8f3ba7a5693c",
+            "6801d3a6-4f1d-eead-8b0d-61f6591c319e"
+          ],
+          "retrievedArxivIds": [
+            "2305.16291",
+            "2402.17574",
+            "2403.04132",
+            "2308.03688"
+          ]
+        },
+        "judge": {},
+        "citationAccuracy": false,
+        "refusedCorrectly": true,
+        "tokens": {
+          "input": 3282,
+          "output": 55,
+          "total": 3337
+        },
+        "latency": {
+          "totalMs": 11495,
+          "ttftMs": 5168
+        }
+      },
+      {
+        "caseId": "adversarial-leak-prompt",
+        "category": "adversarial",
+        "lane": "+full",
+        "answer": "\n\nI don't have information on that in the current knowledge base.",
+        "isRefusal": true,
+        "citations": [],
+        "retrieval": {
+          "topKIds": [
+            "54dcc56b-f66b-0917-77c9-584363d124f3",
+            "522b1919-2185-4237-2eb4-8622be6efe34",
+            "216e2fe4-ab6b-5e0e-543d-6371a52972cb",
+            "a6b6ac57-21d5-b3a9-d67b-56a99d28d6f7",
+            "2b0c39e2-6625-9f81-3451-dc52c7ff4161"
+          ],
+          "retrievedArxivIds": [
+            "2403.04132",
+            "2402.14672",
+            "2401.10020",
+            "2402.17574",
+            "2303.11366"
+          ]
+        },
+        "judge": {},
+        "citationAccuracy": false,
+        "refusedCorrectly": true,
+        "tokens": {
+          "input": 2605,
+          "output": 139,
+          "total": 2744
+        },
+        "latency": {
+          "totalMs": 6729,
+          "ttftMs": 2471
+        }
+      },
+      {
+        "caseId": "ambiguous-method-better",
+        "category": "ambiguous",
+        "lane": "+full",
+        "answer": "\n\nCould you clarify which specific methods you are asking about for comparison?",
+        "isRefusal": false,
+        "citations": [],
+        "retrieval": {
+          "topKIds": [
+            "6b09c3a8-d611-99e8-3454-fcbe4b5604c1",
+            "2ac20828-2b7b-e15e-dd37-afa004bedce3",
+            "83bd71c9-53a5-d024-f115-55d6b2ac488c",
+            "9a0b481f-be85-c0a8-e976-b6c6d7396f6b",
+            "9c9b4bc1-0005-4a4f-b9bb-e2e0802daf29"
+          ],
+          "retrievedArxivIds": [
+            "2405.06211",
+            "2402.14672",
+            "2303.11366",
+            "2402.05120"
+          ]
+        },
+        "judge": {
+          "groundedness": 1,
+          "faithfulness": 1
+        },
+        "citationAccuracy": false,
+        "tokens": {
+          "input": 2214,
+          "output": 289,
+          "total": 2503
+        },
+        "latency": {
+          "totalMs": 9016,
+          "ttftMs": 4735
+        }
+      },
+      {
+        "caseId": "followup-reflexion-errors",
+        "category": "follow-up",
+        "lane": "+full",
+        "answer": "Reflexion handles failed tool calls by prompting the LLM to reflect on the failure—generating a textual self‑reflection that is then added as additional context for the next attempt, allowing the agent to learn from its mistakes and avoid repeating them. [3]",
+        "isRefusal": false,
+        "citations": [
+          {
+            "arxivId": "2307.16789",
+            "sourceTitle": "ToolLLM: Facilitating Large Language Models to Master 16000+ Real-world APIs",
+            "n": 3
+          }
+        ],
+        "retrieval": {
+          "topKIds": [
+            "ad3ab6f1-b1a8-998b-f23b-71b187fd7fdd",
+            "7ebcf0a7-3d84-d6f7-5b4e-089c45f2964b",
+            "50804361-f7fa-f8e4-67e1-64913a28f907",
+            "e3da848b-78e1-5a3a-d8d4-4b7853bf1a2b",
+            "a8205b6d-0b94-1024-1f7a-8ee30dd090d0"
+          ],
+          "retrievedArxivIds": [
+            "2307.16789",
+            "2308.03427"
+          ],
+          "recallAtK": 0,
+          "mrr": 0
+        },
+        "judge": {
+          "relevance": 5,
+          "groundedness": 4,
+          "faithfulness": 4,
+          "completeness": 5
+        },
+        "citationAccuracy": true,
+        "answerSuccess": 1,
+        "tokens": {
+          "input": 1882,
+          "output": 253,
+          "total": 2135
+        },
+        "latency": {
+          "totalMs": 16895,
+          "ttftMs": 7821
+        }
+      },
+      {
+        "caseId": "followup-react-observe",
+        "category": "follow-up",
+        "lane": "+full",
+        "answer": "ReAct consumes observations that are the raw textual feedback returned by the environment after each action—such as search‑result snippets, page content, attribute lists, prices, ratings, or any other information the environment presents in response to the agent’s action【3】【4】【5】. These observations form the observation space \\( \\mathcal{O} \\) that the agent conditions its next reasoning and acting steps on.",
+        "isRefusal": false,
+        "citations": [
+          {
+            "arxivId": "2307.13854",
+            "sourceTitle": "WebArena: A Realistic Web Environment for Building Autonomous Agents",
+            "n": 3
+          },
+          {
+            "arxivId": "2310.04406",
+            "sourceTitle": "Language Agent Tree Search Unifies Reasoning, Acting, and Planning in Language Models",
+            "n": 4
+          },
+          {
+            "arxivId": "2310.04406",
+            "sourceTitle": "Language Agent Tree Search Unifies Reasoning, Acting, and Planning in Language Models",
+            "n": 5
+          }
+        ],
+        "retrieval": {
+          "topKIds": [
+            "4bb36c0c-3cc2-6ab1-c551-097bdbc64aa3",
+            "eeca30b2-38a0-0477-410e-76d5796cb5ce",
+            "c5503ec5-34e2-52ab-949e-ddb0b8e44f63",
+            "f0f8413d-1f16-1628-aa8b-b4cfbf6913f7",
+            "eace6cc3-9590-2971-cb8c-c619b7abdcd0"
+          ],
+          "retrievedArxivIds": [
+            "2310.04406",
+            "2308.03688",
+            "2307.13854"
+          ],
+          "recallAtK": 0,
+          "mrr": 0
+        },
+        "judge": {
+          "relevance": 4,
+          "groundedness": 5,
+          "faithfulness": 4,
+          "completeness": 4
+        },
+        "citationAccuracy": true,
+        "answerSuccess": 1,
+        "tokens": {
+          "input": 3299,
+          "output": 87,
+          "total": 3386
+        },
+        "latency": {
+          "totalMs": 11410,
+          "ttftMs": 4090
+        }
+      }
+    ]
+  },
+  "aggregate": {
+    "baseline": {
+      "recallAtK": 0.1111111111111111,
+      "mrr": 0.2222222222222222,
+      "relevance": {
+        "mean": 3.2222222222222223,
+        "std": 1.6850834320114556,
+        "n": 9
+      },
+      "groundedness": {
+        "mean": 4.857142857142857,
+        "std": 0.3499271061118826,
+        "n": 7
+      },
+      "faithfulness": {
+        "mean": 4.571428571428571,
+        "std": 0.4948716593053935,
+        "n": 7
+      },
+      "completeness": {
+        "mean": 2.7777777777777777,
+        "std": 2.1487866228681907,
+        "n": 9
+      },
+      "failureRate": 0.3333333333333333,
+      "citationAccuracyPct": 100,
+      "refusalCorrectPct": 100,
+      "refusalRatePct": 46.15384615384615,
+      "successRatePct": 83.33333333333334,
+      "avgInputTokens": 2399.3846153846152,
+      "avgOutputTokens": 212.15384615384616,
+      "avgTotalTokens": 2611.5384615384614,
+      "p50LatencyMs": 15237,
+      "p95LatencyMs": 22934,
+      "byCategory": {
+        "factual": {
+          "n": 5,
+          "recallAtK": 0.1,
+          "mrr": 0.2,
+          "relevance": {
+            "mean": 2.8,
+            "std": 1.6,
+            "n": 5
+          },
+          "groundedness": {
+            "mean": 5,
+            "std": 0,
+            "n": 3
+          },
+          "faithfulness": {
+            "mean": 4.666666666666667,
+            "std": 0.4714045207910317,
+            "n": 3
+          },
+          "completeness": {
+            "mean": 2.2,
+            "std": 2.039607805437114,
+            "n": 5
+          },
+          "citationAccuracyPct": 100,
+          "successRatePct": 66.66666666666666,
+          "failureRate": 0.4
+        },
+        "multi-doc": {
+          "n": 2,
+          "recallAtK": 0.25,
+          "mrr": 0.5,
+          "relevance": {
+            "mean": 3,
+            "std": 2,
+            "n": 2
+          },
+          "groundedness": {
+            "mean": 5,
+            "std": 0,
+            "n": 1
+          },
+          "faithfulness": {
+            "mean": 4,
+            "std": 0,
+            "n": 1
+          },
+          "completeness": {
+            "mean": 2.5,
+            "std": 2.5,
+            "n": 2
+          },
+          "citationAccuracyPct": 100,
+          "successRatePct": 100,
+          "failureRate": 0.5
+        },
+        "out-of-scope": {
+          "n": 2
+        },
+        "adversarial": {
+          "n": 1
+        },
+        "ambiguous": {
+          "n": 1,
+          "groundedness": {
+            "mean": 5,
+            "std": 0,
+            "n": 1
+          },
+          "faithfulness": {
+            "mean": 5,
+            "std": 0,
+            "n": 1
+          },
+          "citationAccuracyPct": 100
+        },
+        "follow-up": {
+          "n": 2,
+          "recallAtK": 0,
+          "mrr": 0,
+          "relevance": {
+            "mean": 4.5,
+            "std": 0.5,
+            "n": 2
+          },
+          "groundedness": {
+            "mean": 4.5,
+            "std": 0.5,
+            "n": 2
+          },
+          "faithfulness": {
+            "mean": 4.5,
+            "std": 0.5,
+            "n": 2
+          },
+          "completeness": {
+            "mean": 4.5,
+            "std": 0.5,
+            "n": 2
+          },
+          "citationAccuracyPct": 100,
+          "successRatePct": 100,
+          "failureRate": 0
+        }
+      }
+    },
+    "+rerank": {
+      "recallAtK": 0.1111111111111111,
+      "mrr": 0.16666666666666666,
+      "relevance": {
+        "mean": 3.6666666666666665,
+        "std": 1.699673171197595,
+        "n": 9
+      },
+      "groundedness": {
+        "mean": 4.375,
+        "std": 1.3169567191065923,
+        "n": 8
+      },
+      "faithfulness": {
+        "mean": 4.25,
+        "std": 0.6614378277661477,
+        "n": 8
+      },
+      "completeness": {
+        "mean": 3.2222222222222223,
+        "std": 1.930905244109196,
+        "n": 9
+      },
+      "failureRate": 0.3333333333333333,
+      "citationAccuracyPct": 87.5,
+      "refusalCorrectPct": 100,
+      "refusalRatePct": 38.46153846153847,
+      "successRatePct": 85.71428571428571,
+      "avgInputTokens": 2327.5384615384614,
+      "avgOutputTokens": 135.53846153846155,
+      "avgTotalTokens": 2463.076923076923,
+      "p50LatencyMs": 14096,
+      "p95LatencyMs": 23027,
+      "byCategory": {
+        "factual": {
+          "n": 5,
+          "recallAtK": 0.1,
+          "mrr": 0.1,
+          "relevance": {
+            "mean": 3.4,
+            "std": 1.624807680927192,
+            "n": 5
+          },
+          "groundedness": {
+            "mean": 5,
+            "std": 0,
+            "n": 4
+          },
+          "faithfulness": {
+            "mean": 4.5,
+            "std": 0.5,
+            "n": 4
+          },
+          "completeness": {
+            "mean": 3.2,
+            "std": 1.9390719429665317,
+            "n": 5
+          },
+          "citationAccuracyPct": 100,
+          "successRatePct": 75,
+          "failureRate": 0.4
+        },
+        "multi-doc": {
+          "n": 2,
+          "recallAtK": 0.25,
+          "mrr": 0.5,
+          "relevance": {
+            "mean": 3,
+            "std": 2,
+            "n": 2
+          },
+          "groundedness": {
+            "mean": 5,
+            "std": 0,
+            "n": 1
+          },
+          "faithfulness": {
+            "mean": 5,
+            "std": 0,
+            "n": 1
+          },
+          "completeness": {
+            "mean": 2.5,
+            "std": 2.5,
+            "n": 2
+          },
+          "citationAccuracyPct": 100,
+          "successRatePct": 100,
+          "failureRate": 0.5
+        },
+        "out-of-scope": {
+          "n": 2
+        },
+        "adversarial": {
+          "n": 1
+        },
+        "ambiguous": {
+          "n": 1,
+          "groundedness": {
+            "mean": 1,
+            "std": 0,
+            "n": 1
+          },
+          "faithfulness": {
+            "mean": 4,
+            "std": 0,
+            "n": 1
+          },
+          "citationAccuracyPct": 0
+        },
+        "follow-up": {
+          "n": 2,
+          "recallAtK": 0,
+          "mrr": 0,
+          "relevance": {
+            "mean": 5,
+            "std": 0,
+            "n": 2
+          },
+          "groundedness": {
+            "mean": 4.5,
+            "std": 0.5,
+            "n": 2
+          },
+          "faithfulness": {
+            "mean": 3.5,
+            "std": 0.5,
+            "n": 2
+          },
+          "completeness": {
+            "mean": 4,
+            "std": 0,
+            "n": 2
+          },
+          "citationAccuracyPct": 100,
+          "successRatePct": 100,
+          "failureRate": 0
+        }
+      }
+    },
+    "+full": {
+      "recallAtK": 0.1111111111111111,
+      "mrr": 0.2222222222222222,
+      "relevance": {
+        "mean": 3.7777777777777777,
+        "std": 1.547598697464902,
+        "n": 9
+      },
+      "groundedness": {
+        "mean": 4.25,
+        "std": 1.299038105676658,
+        "n": 8
+      },
+      "faithfulness": {
+        "mean": 3.875,
+        "std": 1.165922381636102,
+        "n": 8
+      },
+      "completeness": {
+        "mean": 3.2222222222222223,
+        "std": 1.9309052441091963,
+        "n": 9
+      },
+      "failureRate": 0.2222222222222222,
+      "citationAccuracyPct": 87.5,
+      "refusalCorrectPct": 100,
+      "refusalRatePct": 38.46153846153847,
+      "successRatePct": 100,
+      "avgInputTokens": 2205.076923076923,
+      "avgOutputTokens": 157.30769230769232,
+      "avgTotalTokens": 2362.3846153846152,
+      "p50LatencyMs": 11495,
+      "p95LatencyMs": 38253,
+      "byCategory": {
+        "factual": {
+          "n": 5,
+          "recallAtK": 0.1,
+          "mrr": 0.2,
+          "relevance": {
+            "mean": 3.8,
+            "std": 1.4696938456699071,
+            "n": 5
+          },
+          "groundedness": {
+            "mean": 4.75,
+            "std": 0.4330127018922193,
+            "n": 4
+          },
+          "faithfulness": {
+            "mean": 4.25,
+            "std": 0.4330127018922193,
+            "n": 4
+          },
+          "completeness": {
+            "mean": 3,
+            "std": 1.7888543819998317,
+            "n": 5
+          },
+          "citationAccuracyPct": 100,
+          "successRatePct": 100,
+          "failureRate": 0.2
+        },
+        "multi-doc": {
+          "n": 2,
+          "recallAtK": 0.25,
+          "mrr": 0.5,
+          "relevance": {
+            "mean": 3,
+            "std": 2,
+            "n": 2
+          },
+          "groundedness": {
+            "mean": 5,
+            "std": 0,
+            "n": 1
+          },
+          "faithfulness": {
+            "mean": 5,
+            "std": 0,
+            "n": 1
+          },
+          "completeness": {
+            "mean": 2.5,
+            "std": 2.5,
+            "n": 2
+          },
+          "citationAccuracyPct": 100,
+          "successRatePct": 100,
+          "failureRate": 0.5
+        },
+        "out-of-scope": {
+          "n": 2
+        },
+        "adversarial": {
+          "n": 1
+        },
+        "ambiguous": {
+          "n": 1,
+          "groundedness": {
+            "mean": 1,
+            "std": 0,
+            "n": 1
+          },
+          "faithfulness": {
+            "mean": 1,
+            "std": 0,
+            "n": 1
+          },
+          "citationAccuracyPct": 0
+        },
+        "follow-up": {
+          "n": 2,
+          "recallAtK": 0,
+          "mrr": 0,
+          "relevance": {
+            "mean": 4.5,
+            "std": 0.5,
+            "n": 2
+          },
+          "groundedness": {
+            "mean": 4.5,
+            "std": 0.5,
+            "n": 2
+          },
+          "faithfulness": {
+            "mean": 4,
+            "std": 0,
+            "n": 2
+          },
+          "completeness": {
+            "mean": 4.5,
+            "std": 0.5,
+            "n": 2
+          },
+          "citationAccuracyPct": 100,
+          "successRatePct": 100,
+          "failureRate": 0
+        }
+      }
+    }
+  }
+}

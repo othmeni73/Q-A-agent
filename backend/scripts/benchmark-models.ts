@@ -4,15 +4,22 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 
 import { loadConfig } from '@app/config/load';
-import { aggregate, DEFAULT_WEIGHTS } from '@app/eval/aggregate';
-import { generateAnswer, type GenerationConfig } from '@app/eval/generate';
+import { aggregate, DEFAULT_WEIGHTS } from '@app/benchmark/aggregate';
+import {
+  generateAnswer,
+  type GenerationConfig,
+} from '@app/benchmark/generate';
 import {
   pairwiseSymmetric,
   pointwiseJudge,
   type JudgeConfig,
-} from '@app/eval/judges';
-import { scoreProgrammatic } from '@app/eval/score-programmatic';
-import type { BenchmarkCase, CaseResult, ModelOutput } from '@app/eval/types';
+} from '@app/benchmark/judges';
+import { scoreProgrammatic } from '@app/benchmark/score-programmatic';
+import type {
+  BenchmarkCase,
+  CaseResult,
+  ModelOutput,
+} from '@app/benchmark/types';
 import { createOllamaClient, createOpenRouterClient } from '@app/llm/clients';
 import { parallelMap } from '@app/utils/concurrency';
 import { shortName } from '@app/utils/format';

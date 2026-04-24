@@ -1,6 +1,6 @@
 # Non-secret, deployment-independent app config.
 # Secrets and per-deployment overrides live in backend/.env (gitignored).
-# Never put API keys, tokens, or passwords here.
+
 
 log:
   level: info  # trace | debug | info | warn | error | fatal
@@ -16,10 +16,6 @@ benchmark:
     model: gemma2:27b
     baseUrl: http://localhost:11434/v1
   # Candidate chat-model pool. Each must currently have a live endpoint on OpenRouter
-  # at $0/$0 pricing — verify before adding via:
-  #   curl -s https://openrouter.ai/api/v1/models/<id>/endpoints
-  # Avoid any Google-family and Llama-derived models: judge is Gemma (Google) and
-  # same-family creates self-preference bias; Llama-derived kept banned historically.
   candidates:
     - minimax/minimax-m2.5:free
     - nvidia/nemotron-3-super-120b-a12b:free
@@ -49,8 +45,8 @@ vector:
 
 
 # ── Persistence (Step 5) ──────────────────────────────────────────
-# Path B: SQLite-backed OLTP store for canonical paper metadata, sessions,
-# and messages. NODE_ENV=test auto-swaps to :memory: inside PersistenceModule.
+#SQLite-backed OLTP store for canonical paper metadata, sessions,
+# and messages.
 persistence:
   path: ./data/app.db
 
@@ -61,12 +57,12 @@ ingestion:
   docsDir: ./docs
   chunkTargetChars: 2000      # ≈ 500 tokens
   chunkOverlapChars: 200      # ≈ 50 tokens
-  # Prefix model = same local Ollama instance + model as the Step-2 benchmark
-  # judge. Pre-pull once: `ollama pull gemma2:27b`.
+  # Prefix model = same local Ollama instance 
+  # judge.  gemma2:27b`.
   prefixModel: gemma2:27b
   prefixBaseUrl: http://localhost:11434/v1
   # Embedder = local Ollama, 768-dim (matches vector.denseSize above).
-  # Pre-pull once: `ollama pull nomic-embed-text`.
+  
   embedModel: nomic-embed-text
   embedBaseUrl: http://localhost:11434/v1
   embedBatchSize: 100
@@ -84,9 +80,7 @@ retrieval:
   rrfK: 60
   # Cross-encoder. Pulled the first time BgeReranker is used; cached under
   # ~/.cache/huggingface thereafter. Pre-pull is optional.
-  # Xenova hosts bge-reranker-{base,large}; v2-m3 is not available under the
-  # Xenova org. `large` is the quality pick (~550 MB ONNX, ~400 ms/batch on CPU);
-  # switch to `base` if cold-start is painful.
+  
   rerankerModel: Xenova/bge-reranker-large
 
 
@@ -94,8 +88,30 @@ retrieval:
 # Consumed by ChatService. `model` is the OpenRouter id locked by the
 # Step 2 benchmark (see backend/eval/model-selection/results.json).
 chat:
-  model: nvidia/nemotron-3-super-120b-a12b:free
+  
+  model: nvidia/nemotron-3-super-120b-a12b
   temperature: 0.2
   maxOutputTokens: 1024
   refusalString: "I don't have information on that in the current knowledge base."
   userName: the user
+
+
+# ── Evaluation harness 
+# Consumed by `pnpm evaluate`. Uses the same ChatService the HTTP route
+# uses — no drift. Runs each case through 3 ablation lanes.
+eval:
+  casesPath: ./eval/cases.json
+  resultsPath: ./eval/results.json
+  baselinePath: ./eval/baseline.json
+  concurrency: 2
+  # Judge on local Ollama, distinct family from chat model (Nemotron):
+  # kills self-preference bias. Same process + model as contextual prefix
+  # — no extra ops surface.
+  judgeModel: gemma2:27b
+  judgeBaseUrl: http://localhost:11434/v1
+  retrievalK: 5
+  successThresholds:
+    relevance: 4
+    groundedness: 4
+  # relevance <= this is counted in failureRate.
+  failureThreshold: 2

@@ -1,14 +1,11 @@
 /**
- * Local-Ollama-backed `LlmClient` for the 'prefix' role.
+ * Local-Ollama-backed `LlmClient` for the 'prefix' role and Step-13 judges.
  *
- * Deliberately narrow: only `generateText` is implemented today because the
- * sole caller (`ContextualPrefixService`) only needs it. `generateObject` and
- * `stream` throw — extend when a caller actually needs them.
- *
- * Reuses the shared `createOllamaClient` factory (OpenAI-compatible endpoint
- * at `http://localhost:11434/v1`) that the benchmark script also uses for the
- * judge, so one configured Ollama instance serves ingestion, eval, and any
- * future local role without duplicating plumbing.
+ * `generateObject` is implemented as prompt-then-parse (the judge prompts
+ * already instruct "return a single JSON object on one line", and Ollama's
+ * AI-SDK-OpenAI-compatible binding doesn't reliably support structured
+ * outputs across models — safer to validate with Zod ourselves). `stream`
+ * throws; no caller needs it.
  */
 
 import { generateText as aiGenerateText } from 'ai';
@@ -55,19 +52,61 @@ export class OllamaLlmClient implements LlmClient {
     };
   }
 
-  generateObject<T>(
-    _opts: GenerateObjectOptions<T>,
+  async generateObject<T>(
+    opts: GenerateObjectOptions<T>,
   ): Promise<GenerateObjectResult<T>> {
-    return Promise.reject(
-      new Error(
-        'OllamaLlmClient.generateObject: not implemented (add when a caller needs it)',
-      ),
-    );
+    const t0 = Date.now();
+    const res = await aiGenerateText({
+      model: this.ollama(opts.model),
+      system: opts.system,
+      prompt: opts.prompt,
+      temperature: opts.temperature,
+      maxOutputTokens: opts.maxOutputTokens,
+      abortSignal: opts.signal,
+    });
+    const json = extractJsonObject(res.text);
+    const parsed = opts.schema.parse(json);
+    return {
+      object: parsed,
+      usage: toUsage(res.usage),
+      latencyMs: Date.now() - t0,
+    };
   }
 
   stream(_opts: StreamOptions): StreamResult {
     throw new Error(
       'OllamaLlmClient.stream: not implemented (add when a caller needs it)',
+    );
+  }
+}
+
+/**
+ * Extract a JSON object from free-form model output.
+ * Handles the common failure modes: leading prose, trailing prose, fenced
+ * code blocks. Throws if no `{…}` substring is found.
+ */
+function extractJsonObject(text: string): unknown {
+  const trimmed = text.trim();
+  // Strip ```json fences if the model added them.
+  const unfenced = trimmed
+    .replace(/^```(?:json)?\s*/i, '')
+    .replace(/\s*```$/i, '')
+    .trim();
+  const start = unfenced.indexOf('{');
+  const end = unfenced.lastIndexOf('}');
+  if (start === -1 || end === -1 || end <= start) {
+    throw new Error(
+      `OllamaLlmClient.generateObject: no JSON object in output: ${text.slice(0, 200)}`,
+    );
+  }
+  const candidate = unfenced.slice(start, end + 1);
+  try {
+    return JSON.parse(candidate);
+  } catch (err) {
+    throw new Error(
+      `OllamaLlmClient.generateObject: JSON.parse failed (${
+        err instanceof Error ? err.message : String(err)
+      }) on: ${candidate.slice(0, 200)}`,
     );
   }
 }

@@ -12,7 +12,8 @@ export type LlmRole =
   | 'prefix'
   | 'judge-pairwise'
   | 'judge-pointwise'
-  | 'citation-picker';
+  | 'citation-picker'
+  | 'rerank';
 
 /** Token usage reported by the provider (bytes-to-bill). */
 export interface Usage {
@@ -70,6 +71,8 @@ export interface StreamOptions extends BaseOptions {
   messages: ChatMessage[];
   temperature?: number;
   maxOutputTokens?: number;
+  /** Step 13: correlation id threaded from the chat controller; shows up in trace records. */
+  correlationId?: string;
 }
 
 /**
