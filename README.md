@@ -133,6 +133,15 @@ pnpm evaluate
 
 Takes ~15 minutes (the judge calls run against local Gemma). Results land in `backend/eval/results.json` with per-case + per-category + per-ablation-lane numbers. See **Part 3 — Evaluation results** below.
 
+### 9. Run in Docker (optional)
+
+```bash
+docker build -t q-a-agent .
+docker run --rm -p 3000:3000 --env-file backend/.env --network host q-a-agent
+```
+
+`--network host` lets the container reach Qdrant (`localhost:6333`) and Ollama (`localhost:11434`) running on the host. On macOS / Windows, swap for `--add-host host.docker.internal:host-gateway` and point the `url` fields in `config.yaml` at `host.docker.internal`.
+
 ### Useful commands
 
 | Command | What it does |

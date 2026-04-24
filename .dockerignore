@@ -1,0 +1,32 @@
+# VCS + CI
+.git
+.github
+
+# Node / pnpm caches
+node_modules
+**/node_modules
+.pnpm-store
+
+# Build outputs (rebuilt inside the image)
+**/dist
+**/tsconfig.tsbuildinfo
+coverage
+
+# Runtime data (created at container start, not baked in)
+backend/data
+backend/traces
+
+# Corpus + eval artefacts — not needed at runtime; corpus lives in Qdrant
+backend/docs
+backend/eval
+
+# Secrets + logs
+.env
+.env.*
+!.env.example
+*.log
+
+# OS / editor
+.DS_Store
+.idea
+.vscode
