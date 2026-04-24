@@ -262,9 +262,7 @@ The good: citation accuracy is near-perfect and groundedness is high — the mod
 
 The bad: relevance at 3.78/5 is honest rather than impressive — answers often address the question but miss aspects of the reference. The cause isn't the chat model, it's retrieval: our labelled `supportingArxivIds` are found in the top-5 for only ~11% of cases. Not because retrieval is broken, but because our labels are narrow — the corpus has heavy topical overlap (many papers cover ReAct, Reflexion, tool use) and the retriever often surfaces an adjacent-but-not-labelled paper that still grounds the answer. So groundedness stays high even when Recall@5 drops. Still a real signal that the retrieval could be tuned further.
 
-### Limitations
 
-13 cases is enough for the spec but small — don't read too much into single-point means. We ran the eval once per lane, so no confidence intervals. The chat model was the paid Nemotron (~$0.10 per full run); the free variant works too but is gated behind OpenRouter's prompt-training opt-in.
 ---
 
 ## License
